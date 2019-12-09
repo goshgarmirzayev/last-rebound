@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/lastrebound.iml" filepath="$PROJECT_DIR$/lastrebound.iml" />
       <module fileurl="file://$PROJECT_DIR$/tv.iml" filepath="$PROJECT_DIR$/tv.iml" />
     </modules>
   </component>
