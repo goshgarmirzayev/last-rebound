@@ -1,0 +1,219 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/onbir.css}">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <a href="https://api.whatsapp.com/send?phone=51955081075&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Varela%202."
+       class="float" target="_blank">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a>
+</head>
+<script>
+    function setIdForDelete(id) {
+        document.getElementById("matchId").value = id;
+    }
+
+    function setIdForUpdate(id) {
+        document.getElementById("matchIdForUpdate").value = id;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var json = JSON.parse(JSON.stringify(xhttp.responseText));
+                json = json.replace("{[", "")
+                json = json.replace("]}", "")
+                var matchHeader = json.split(",")[0]
+                console.log(matchHeader)
+                document.getElementById("updateHeader").value = matchHeader
+                var matchBeginDate = json.split(",")[1]
+                matchBeginDate = matchBeginDate.substring(0, matchBeginDate.length - 5)
+                var date = matchBeginDate.split(" ")[0]
+                console.log(date)
+                var time = matchBeginDate.split(" ")[1]
+                console.log(time)
+                date = date.split("-")[1] + "/" + date.split("-")[2] + "/" + date.split("-")[0]
+                date = date.replace("-", "/")
+                date = date.replace("-", "/")
+                matchBeginDate = time + " " + date
+                document.getElementById("inputUpdate").value = matchBeginDate;
+            }
+        };
+        xhttp.open("GET", "/match/" + id, true);
+        xhttp.send();
+    }
+
+
+</script>
+<body>
+
+<section id="nav-bar">
+    <nav class="navbar navbar-expand-lg navbar-light ">
+        <a class="navbar-brand" href="/"><img th:src="@{/img/logo1.png}"></a>
+        <button class="navbar-toggler bg-light p-1" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav navbar-center">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/"><i class="fa fa-home"></i><span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/" target="">ONBİR</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminPanel/addNewUser">Create new user</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</section>
+<section id="videoFrame">
+    <form action="/adminPanel/search" class=" container">
+        <input type="text" name="query" role="searchbox" class="form-control" placeholder="f.e Real Madrid">
+        <input type="submit" class=" btn btn-primary" value="search">
+    </form>
+    <div class="container" th:each="match:${matchList}">
+        <div class="row">
+            <div class="col">
+                <li class="list-group-item">
+                    <h3 th:text="${#dates.format(match.beginDate, 'HH:mm')+' | '+match.header}"></h3>
+                    <button th:onclick="|setIdForUpdate(${match.id})|" type="button"
+                            class="btn btn-warning" data-toggle="modal" data-target="#updateMatch" id="matchBtn">Update
+
+                    </button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                            th:onclick="|setIdForDelete(${match.id})|" id="matchBtn">Delete
+                    </button>
+                    <a class="btn btn-dark" th:href="${'/adminPanel/details/'+match.id}" id="matchBtn">Go to Details</a>
+                </li>
+
+            </div>
+        </div>
+    </div>
+    <div class=" col col-4 mx-auto">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMatch">
+            Add New Match
+        </button>
+    </div>
+
+</section>
+<footer class="page-footer">
+    <div class="footer-copyright text-center py-3 ftr">© 2019 Bütün Hüquqlar Qorunur |
+        <a href="https://Onbir.az" target="_blank"> ONBİR.AZ</a>
+    </div>
+
+</footer>
+<!--Modal Start Here-->
+<!-- Modal -->
+<div class="modal fade" id="addMatch" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="GET" action="/adminPanel/addMatch" class="" autocomplete="off">
+                <div class="modal-body">
+
+                    <input type="text" name="header" class="form-control mb-1"
+                           placeholder="Match Header">
+                    <input id="input" th:width="auto" name="beginDate">
+                    <script>
+                        $('#input').datetimepicker({
+                            uiLibrary: 'bootstrap4',
+                            modal: true,
+                            footer: true
+                        });
+                    </script>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="updateMatch" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="GET" action="/adminPanel/updateMatch" class="">
+                <div class="modal-body">
+
+                    <input type="text" name="header" class="form-control mb-1"
+                           placeholder="Match Header" id="updateHeader">
+                    <input id="inputUpdate" th:width="auto" name="beginDate">
+                    <script>
+                        $('#inputUpdate').datetimepicker({
+                            uiLibrary: 'bootstrap4',
+                            modal: true,
+                            footer: true
+                        });
+                    </script>
+                    <input type="hidden" name="matchId" id="matchIdForUpdate">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Match Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure?</p>
+            </div>
+            <form action="/adminPanel/delete">
+                <input type="hidden" name="matchId" id="matchId" value="0">
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+></script>
+
+</body>
+</html>
+<script>
+</script>
