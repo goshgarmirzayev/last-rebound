@@ -30,22 +30,4 @@ public class LinkController {
         modelAndView.setViewName("match/detail");
         return modelAndView;
     }
-
-//    @RequestMapping(value = "/support")
-//    public ModelAndView support(ModelAndView modelAndView, @RequestParam("fullname") String fullname
-//            , @RequestParam("email") String email
-//            , @RequestParam("phone") String phone
-//            , @RequestParam("content") String content) {
-//        Support support = new Support();
-//        support.setContent(content);
-//        support.setEmail(email);
-//        support.setPhone(phone);
-//        support.setFullname(fullname);
-//
-////        System.out.println(support.getFullname()+support.getContent()+support.getEmail()+support.getPhone());
-//        supportServiceInter.save(support);
-//
-//        return index(modelAndView);
-//    }
-
 }
