@@ -8,17 +8,7 @@ package com.goshgarmirzayev.lastrebound.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -53,6 +43,17 @@ public class Match implements Serializable {
     @NotNull
     @Column(name = "link_opened_time")
     private Date linkOpenedTime;
+    @JoinColumn(name = "league_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private League leagueId;
+
+    public League getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(League leagueId) {
+        this.leagueId = leagueId;
+    }
 
     public Date getLinkOpenedTime() {
         return linkOpenedTime;

@@ -1,8 +1,25 @@
 body {
-    background-color: #32363E!important;
+    background-color: #32363E !important;
+    color: white !important;
 }
 
 .btn-block {
     background-color: darkslategray !important;
-
+    color: white !important;
 }
+
+@media (min-width: 500px) {
+    .leagues {
+        position: fixed;
+        margin-top: 200px;
+        margin-left: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .leagues {
+        padding-right: 100px;
+        padding-left: 100px;
+    }
+}
+
