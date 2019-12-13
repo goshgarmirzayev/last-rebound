@@ -10,8 +10,22 @@ body {
 
 @media (min-width: 500px) {
     .leagues {
+        height: 100vh;
         position: fixed;
-        margin-top: 200px;
+        font-size: x-large;
+        background-color: dimgrey;
+        min-width: 300px;
+        display: block;
+    }
+
+    .leagues table td {
+        margin-left: 20px;
+        margin-top: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+
+    .leagues h3 {
         margin-left: 20px;
     }
 }
@@ -20,6 +34,7 @@ body {
     .leagues {
         padding-right: 100px;
         padding-left: 100px;
+        display: none;
     }
 }
 
