@@ -1,6 +1,7 @@
 package com.goshgarmirzayev.lastrebound.controller;
 
 import com.goshgarmirzayev.lastrebound.dao.UserDataInter;
+import com.goshgarmirzayev.lastrebound.dto.LinkDTO;
 import com.goshgarmirzayev.lastrebound.entity.Link;
 import com.goshgarmirzayev.lastrebound.entity.Match;
 import com.goshgarmirzayev.lastrebound.entity.User;
@@ -9,13 +10,12 @@ import com.goshgarmirzayev.lastrebound.service.inter.MatchServiceInter;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Max;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,6 +32,19 @@ public class UpdateController {
         Match match = matchServiceInter.findById(id);
 
         return "{[" + match.getHeader() + "," + match.getBeginDate() + "]}";
+    }
+
+    @RequestMapping("/getMatchData/{id}")
+    public List<LinkDTO> getLinksForGameİd(@PathVariable("id") Integer id) {
+        Match match = matchServiceInter.findById(id);
+        List<LinkDTO> linkList = new ArrayList<>();
+        System.out.println(match.getLinkList());
+
+
+        for (Link link : match.getLinkList()) {
+            linkList.add(new LinkDTO(link.getId(),link.getHeader(), link.getUrl()));
+        }
+        return ResponseEntity.ok(linkList).getBody();
     }
 
     @RequestMapping("/link/{id}")

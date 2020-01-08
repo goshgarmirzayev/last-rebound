@@ -4,75 +4,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" th:href="@{css/index.css}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{css/bootstrap.css}">
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <script th:src="@{js/jquery.js}"></script>
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>-->
+    <!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
 </head>
+
 <body>
-<div class="leagues">
+<div class="leagues" style="">
     <h3>Leagues:</h3>
     <table>
         <tbody>
-        <td class=" btn btn-block btn-lg">NBA</td>
-        <td class=" btn btn-block btn-lg">EURO League</td>
+        <td class="btn btn-block btn-lg league"><a href="/" style="">All Games</a></td>
+        <th:block th:each="l:${leagues}">
+            <td class="btn btn-block btn-lg league">
+                <a th:href="${'/?id='+l.id}" th:text="${l.name}"></a>
+            </td>
+        </th:block>
+
         </tbody>
     </table>
 </div>
 <div class="container mx-auto">
 
-    <div class="col-xs-12 col-md-8 col-sm-12 mx-auto">
+    <div class="col-xs-12 col-md-8 col-sm-12 mx-auto games">
         <div class="clearfix"><h1>NBA Live Streams and Schedule</h1>
             <hr>
         </div>
-
-        <a href="http://nbastreams.xyz/live/1/" class="btn btn-default btn-lg btn-block game-bar">
-            <div class="media">
-                <div class="media-left">
-                    <img src="http://nbastreams.xyz/images/nba2.png" class="media-object">
+        <th:block th:each="game:${matchList}">
+            <a class="btn btn-default btn-lg btn-block game-bar">
+                <div class="media">
+                    <div class="media-left">
+                        <img th:src="@{img/yourlogo.png}" class="media-object" th:width="150px">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" th:text="${game.header}"> LA Clippers vs Indiana Pacers</h4>
+                        <p th:text="${#dates.format(game.beginDate,'dd MMMM  yyyy hh:mm')}">December 9th, 2019 - 7:00 PM
+                            ET</p>
+                        <p id="show-links" th:data="${game.id}" class=" mx-auto show-links"
+                           style="width: 50%">Show
+                            Links
+                        </p>
+                        <div class="game-links" th:id="${'links-'+game.id}"></div>
+                        <input type="checkbox" style="display: none" checked="checked" class="link-checkbox">
+                    </div>
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading"> LA Clippers vs Indiana Pacers</h4>
-                    <p>December 9th, 2019 - 7:00 PM ET</p>
-                </div>
-            </div>
-        </a><br>
-
-        <a href="http://nbastreams.xyz/live/7/" class="btn btn-default btn-lg btn-block">
-            <div class="media">
-                <div class="media-left">
-                    <img src="http://nbastreams.xyz/images/nba2.png" class="media-object">
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"> Minnesota Timberwolves vs Phoenix Suns</h4>
-                    <p>December 9th, 2019 - 9:00 PM ET</p>
-                </div>
-            </div>
-        </a><br>
-        <a href="http://nbastreams.xyz/live/8/" class="btn btn-default btn-lg btn-block">
-            <div class="media">
-                <div class="media-left">
-                    <img src="http://nbastreams.xyz/images/nba2.png" class="media-object">
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"> Oklahoma City Thunder vs Utah Jazz</h4>
-                    <p>December 9th, 2019 - 9:00 PM ET</p>
-                </div>
-            </div>
-        </a><br>
-        <a href="http://nbastreams.xyz/live/9/" class="btn btn-default btn-lg btn-block">
-            <div class="media">
-                <div class="media-left">
-                    <img src="http://nbastreams.xyz/images/nba2.png" class="media-object">
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"> Memphis Grizzlies vs Golden State Warriors</h4>
-                    <p>December 9th, 2019 - 10:30 PM ET</p>
-                </div>
-            </div>
-        </a><br>
+            </a>
+        </th:block>
 
 
     </div>
@@ -80,4 +61,38 @@
 
 </div>
 </body>
+<script>
+
+    $(".show-links").on('click', function () {
+        var parent = $(this)
+        var showCheckBox = $('.link-checkbox')
+        let matchId = parent.attr('data');
+        let linkBar = $("#links-" + matchId);
+        if (showCheckBox.attr('checked')) {
+            showCheckBox.attr('checked', false)
+            parent[0].innerText = "Hide Links"
+            let matchId = parent.attr('data');
+            $("#links-" + matchId).show();
+            document.getElementById("links-" + matchId).innerHTML = ""
+            $.ajax({
+                url: "/getMatchData/" + matchId,
+                method: "GET",
+                success: function (response) {
+                    let linkJSON = JSON.parse(JSON.stringify(response))
+                    var template = "<div class=\"media game-links\" id='links-addon'><div class=\"media-body\">"
+                    $.each(linkJSON, function (index) {
+                        template += "<a class='btn btn-success mt-3 ml-3 mr-3' href=\"/watch/" + linkJSON[index].id+ "\">" + linkJSON[index].header + "</a>"
+                    })
+                    template += "</div></div>";
+                    linkBar.append(template)
+                }
+            })
+        } else {
+            showCheckBox.attr('checked', true)
+            $("#links-" + matchId).hide();
+            parent[0].innerText = "Show Links"
+        }
+
+    })
+</script>
 </html>

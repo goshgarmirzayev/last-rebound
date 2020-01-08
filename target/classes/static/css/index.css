@@ -8,14 +8,18 @@ body {
     color: white !important;
 }
 
+.game-bar {
+    margin-bottom: 40px;
+}
+
 @media (min-width: 500px) {
     .leagues {
         height: 100vh;
         position: fixed;
         font-size: x-large;
-        background-color: dimgrey;
+        background-color: #495057;
         min-width: 300px;
-        display: block;
+
     }
 
     .leagues table td {
@@ -23,6 +27,10 @@ body {
         margin-top: 20px;
         margin-right: 20px;
         margin-bottom: 20px;
+    }
+
+    .leagues table {
+        margin-top: 52px;
     }
 
     .leagues h3 {
@@ -36,5 +44,22 @@ body {
         padding-left: 100px;
         display: none;
     }
+
+    .game-bar h4, p {
+        font-size: 14px;
+
+    }
+
+    .game-links {
+        margin-left: -150px !important;
+    }
+
+    .game-bar img {
+        max-width: 86px;
+    }
+}
+
+.games img {
+    border-radius: 10px;
 }
 

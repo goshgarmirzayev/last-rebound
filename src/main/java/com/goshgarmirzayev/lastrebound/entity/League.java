@@ -14,13 +14,9 @@ public class League {
     private Integer id;
     @NotNull
     @Basic(optional = false)
-    @Size(min = 0,max = 255)
+    @Size(min = 0, max = 255)
     private String name;
-    @NotNull
-    @Basic(optional = false)
-    @Size(min = 0,max = 2000)
-    private String streamUrl;
-    @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "leagueId", fetch = FetchType.LAZY)
     private List<Match> matchList;
 
     public List<Match> getMatchList() {
@@ -31,15 +27,16 @@ public class League {
         this.matchList = matchList;
     }
 
-    public League(@NotNull @Size(min = 0, max = 255) String name, @NotNull @Size(min = 0, max = 2000) String streamUrl) {
+    public League(@NotNull @Size(min = 0, max = 255) String name) {
         this.name = name;
-        this.streamUrl = streamUrl;
+    }
+
+    public League() {
     }
 
     public League(@NotNull Integer id, @NotNull @Size(min = 0, max = 255) String name, @NotNull @Size(min = 0, max = 2000) String streamUrl) {
         this.id = id;
         this.name = name;
-        this.streamUrl = streamUrl;
     }
 
     public Integer getId() {
@@ -58,20 +55,11 @@ public class League {
         this.name = name;
     }
 
-    public String getStreamUrl() {
-        return streamUrl;
-    }
-
-    public void setStreamUrl(String streamUrl) {
-        this.streamUrl = streamUrl;
-    }
-
     @Override
     public String toString() {
         return "League{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", streamUrl='" + streamUrl + '\'' +
                 '}';
     }
 }
