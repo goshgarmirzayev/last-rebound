@@ -1,9 +1,11 @@
 package com.goshgarmirzayev.lastrebound.controller;
 
 import com.goshgarmirzayev.lastrebound.dao.UserDataInter;
+import com.goshgarmirzayev.lastrebound.entity.League;
 import com.goshgarmirzayev.lastrebound.entity.Link;
 import com.goshgarmirzayev.lastrebound.entity.Match;
 import com.goshgarmirzayev.lastrebound.entity.User;
+import com.goshgarmirzayev.lastrebound.service.inter.LeagueServiceInter;
 import com.goshgarmirzayev.lastrebound.service.inter.LinkServiceInter;
 import com.goshgarmirzayev.lastrebound.service.inter.MatchServiceInter;
 import com.goshgarmirzayev.lastrebound.service.inter.UserServiceInter;
@@ -28,12 +30,14 @@ public class AdminController {
     UserServiceInter userServiceInter;
     @Autowired
     UserDataInter userDataInter;
+    @Autowired
+    LeagueServiceInter leagueServiceInter;
 
     @GetMapping
     public ModelAndView index(ModelAndView modelAndView) {
-
         List<Match> matchList = matchServiceInter.findAll();
         modelAndView.addObject("matchList", matchList);
+        modelAndView.addObject("leagueList", leagueServiceInter.getAll());
         modelAndView.addObject("service", matchServiceInter);
         modelAndView.setViewName("admin/admin");
         return modelAndView;
@@ -222,6 +226,27 @@ public class AdminController {
         if (r == -1) {
             result.rejectValue("email", "email", "exist");
         }
+        modelAndView.setViewName("redirect:/adminPanel");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/addLeague")
+    public ModelAndView addLeague(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("logoUrl") String logoUrl) {
+        leagueServiceInter.save(new League(name, logoUrl));
+        modelAndView.setViewName("redirect:/adminPanel");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/updateLeague")
+    public ModelAndView updateLeague(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("logoUrl") String logoUrl, @RequestParam("leagueId") Integer id) {
+        leagueServiceInter.save(new League(id, name, logoUrl));
+        modelAndView.setViewName("redirect:/adminPanel");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/deleteLeague")
+    public ModelAndView deleteLeague(ModelAndView modelAndView, @RequestParam("leagueId") Integer id) {
+        leagueServiceInter.deleteById(id);
         modelAndView.setViewName("redirect:/adminPanel");
         return modelAndView;
     }

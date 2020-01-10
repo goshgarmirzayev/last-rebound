@@ -5,19 +5,34 @@
     <meta charset="UTF-8">
     <title>Admin Panel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/onbir.css}">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <a href="https://api.whatsapp.com/send?phone=51955081075&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Varela%202."
-       class="float" target="_blank">
-        <i class="fa fa-whatsapp my-float"></i>
-    </a>
 </head>
 <script>
+    $(document).ready(function () {
+        $('.edit-league').on('click', function () {
+            let leagueId = $(this).attr('data');
+            $.ajax({
+                url: "/getLeagueData/" + leagueId,
+                method: 'GET',
+                success: function (response) {
+                    $('#updateLeaugueName').val(response.name)
+                    $('#logoUrlForUpdate').val(response.logoUrl)
+                    $('#updateLeagueId').val(response.id);
+                }
+            })
+        })
+        //Delete League
+        $('.delete-league').on('click', function () {
+            $("#leagueIdForDelete").val($(this).attr('data'));
+
+        })
+    })
+
+
     function setIdForDelete(id) {
         document.getElementById("matchId").value = id;
     }
@@ -56,7 +71,6 @@
 
 <section id="nav-bar">
     <nav class="navbar navbar-expand-lg navbar-light ">
-        <a class="navbar-brand" href="/"><img th:src="@{/img/logo1.png}"></a>
         <button class="navbar-toggler bg-light p-1" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -77,11 +91,44 @@
         </div>
     </nav>
 </section>
+<div class=" col col-4 mx-auto">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLeague">
+        Add New Leauge
+    </button>
+</div>
+<div class="col col-12">
+    <p class="text"> Leauges:</p>
+    <table class="table">
+        <thead>
+        <th class="">#</th>
+        <th class="">Leauge name</th>
+        <th class="">Actions</th>
+        </thead>
+        <tbody>
+        <tr th:each="league:${leagueList}">
+            <td scope="col"></td>
+            <td scope="col" th:text="${league.name}"></td>
+            <td scope="col">
+                <button type="submit" class="btn btn-warning edit-league" data-toggle="modal" th:data="${league.id}"
+                        data-target="#updateLeauge">
+                    Edit
+                </button>
+
+                <input type="submit" class="btn btn-danger delete-league" data-toggle="modal" th:data="${league.id}"
+                       data-target="#deleteLeagueModal"
+                       value="Delete"/>
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+</div>
 <section id="videoFrame">
-    <form action="/adminPanel/search" class=" container">
-        <input type="text" name="query" role="searchbox" class="form-control" placeholder="f.e Real Madrid">
-        <input type="submit" class=" btn btn-primary" value="search">
-    </form>
+    <!--    <form action="/adminPanel/search" class=" container">-->
+    <!--        <input type="text" name="query" role="searchbox" class="form-control" placeholder="f.e Real Madrid">-->
+    <!--        <input type="submit" class=" btn btn-primary" value="search">-->
+    <!--    </form>-->
     <div class="container" th:each="match:${matchList}">
         <div class="row">
             <div class="col">
@@ -107,12 +154,6 @@
     </div>
 
 </section>
-<footer class="page-footer">
-    <div class="footer-copyright text-center py-3 ftr">© 2019 Bütün Hüquqlar Qorunur |
-        <a href="https://Onbir.az" target="_blank"> ONBİR.AZ</a>
-    </div>
-
-</footer>
 <!--Modal Start Here-->
 <!-- Modal -->
 <div class="modal fade" id="addMatch" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
@@ -138,6 +179,34 @@
                             footer: true
                         });
                     </script>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="addLeague" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Leauge Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="/adminPanel/addLeague" class="" autocomplete="off">
+                <div class="modal-body">
+
+                    <input type="text" name="name" class="form-control mb-1"
+                           placeholder="Leauge name">
+                    <input type="url" name="logoUrl" class="form-control mb-1"
+                           placeholder="Logo url" required>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -183,6 +252,34 @@
 
     </div>
 </div>
+<div class="modal fade" id="updateLeauge" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="/adminPanel/updateLeague" class="">
+                <div class="modal-body">
+
+                    <input type="text" name="name" class="form-control mb-1"
+                           placeholder="Match Header" id="updateLeaugueName">
+                    <input type="text" name="logoUrl" class="form-control mb-1"
+                           placeholder="Match Header" id="logoUrlForUpdate">
+                    <input type="hidden" name="leagueId" id="updateLeagueId">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -198,6 +295,30 @@
             </div>
             <form action="/adminPanel/delete">
                 <input type="hidden" name="matchId" id="matchId" value="0">
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteLeagueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure?</p>
+            </div>
+            <form action="/adminPanel/deleteLeague">
+                <input type="hidden" name="leagueId" id="leagueIdForDelete" value="0">
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Yes</button>

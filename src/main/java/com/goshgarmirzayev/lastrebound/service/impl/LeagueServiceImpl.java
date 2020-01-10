@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class LeagueServiceImpl implements LeagueServiceInter {
     @Autowired
@@ -32,6 +33,11 @@ public class LeagueServiceImpl implements LeagueServiceInter {
     public int deleteAll() {
         leagueDataInter.deleteAll();
         return 0;
+    }
+
+    @Override
+    public League save(League league) {
+        return leagueDataInter.save(league);
     }
 
     @Override
