@@ -3,6 +3,7 @@ package com.goshgarmirzayev.lastrebound.service.impl;
 import com.goshgarmirzayev.lastrebound.dao.LeagueDataInter;
 import com.goshgarmirzayev.lastrebound.entity.League;
 import com.goshgarmirzayev.lastrebound.service.inter.LeagueServiceInter;
+import com.goshgarmirzayev.lastrebound.service.inter.MatchServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ import java.util.List;
 public class LeagueServiceImpl implements LeagueServiceInter {
     @Autowired
     LeagueDataInter leagueDataInter;
+    @Autowired
+    MatchServiceInter matchServiceInter;
 
     @Override
     public List<League> getAll() {
@@ -25,6 +28,7 @@ public class LeagueServiceImpl implements LeagueServiceInter {
 
     @Override
     public int deleteById(Integer id) {
+        matchServiceInter.deleteAllByLeagueId(leagueDataInter.findById(id).get());
         leagueDataInter.deleteById(id);
         return 0;
     }

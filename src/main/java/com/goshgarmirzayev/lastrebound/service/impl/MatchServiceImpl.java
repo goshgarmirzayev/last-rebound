@@ -1,7 +1,9 @@
 package com.goshgarmirzayev.lastrebound.service.impl;
 
 import com.goshgarmirzayev.lastrebound.dao.MatchDaoInter;
+import com.goshgarmirzayev.lastrebound.entity.League;
 import com.goshgarmirzayev.lastrebound.entity.Match;
+import com.goshgarmirzayev.lastrebound.service.inter.LinkServiceInter;
 import com.goshgarmirzayev.lastrebound.service.inter.MatchServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,12 @@ import java.util.List;
 public class MatchServiceImpl implements MatchServiceInter {
     @Autowired
     MatchDaoInter matchDaoInter;
+    @Autowired
+    LinkServiceInter linkServiceInter;
 
     @Override
     public List<Match> findAll() {
-        return  matchDaoInter.findAllByOrderByBeginDateDesc();
+        return matchDaoInter.findAllByOrderByBeginDateDesc();
     }
 
     @Override
@@ -28,7 +32,7 @@ public class MatchServiceImpl implements MatchServiceInter {
 
     @Override
     public Match save(Match match) {
-           return matchDaoInter.save(match);
+        return matchDaoInter.save(match);
     }
 
     @Override
@@ -38,6 +42,7 @@ public class MatchServiceImpl implements MatchServiceInter {
 
     @Override
     public int deleteById(Integer id) {
+        linkServiceInter.deleteAllByMatchId(findById(id));
         matchDaoInter.deleteById(id);
         return 0;
     }
@@ -50,5 +55,13 @@ public class MatchServiceImpl implements MatchServiceInter {
     @Override
     public List<Match> todayMatch(Date date) {
         return null;
+    }
+
+    @Override
+    public void deleteAllByLeagueId(League id) {
+        for (Match match : id.getMatchList()) {
+            deleteById(match.getId());
+        }
+        matchDaoInter.deleteAllByLeagueId(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.goshgarmirzayev.lastrebound.service.inter;
 
+import com.goshgarmirzayev.lastrebound.entity.League;
 import com.goshgarmirzayev.lastrebound.entity.Match;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +23,5 @@ public interface MatchServiceInter {
 
     List<Match> todayMatch(Date date);
 
+    void deleteAllByLeagueId(League league);
 }

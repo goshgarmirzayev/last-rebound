@@ -54,10 +54,9 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/addMatch")
-    public ModelAndView addMatch(ModelAndView modelAndView, @RequestParam("header") String header, @RequestParam("beginDate") String beginDate) {
+    public ModelAndView addMatch(ModelAndView modelAndView, @RequestParam("header") String header, @RequestParam("beginDate") String beginDate, @RequestParam("leagueId") Integer leagueId) {
         String datetimearr[] = beginDate.split(" ");
         String date = datetimearr[1];
-
         String time = datetimearr[0];
         String hour = time.split(":")[0];
         String minute = time.split(":")[1];
@@ -89,7 +88,7 @@ public class AdminController {
         Calendar dateSql = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute));
         Calendar openedTime = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day), openedHour, openedMinute);
         Match match = new Match(header, dateSql.getTime(), openedTime.getTime());
-
+        match.setLeagueId(leagueServiceInter.findById(leagueId));
         matchServiceInter.save(match);
         modelAndView.setViewName("redirect:/adminPanel");
         return modelAndView;

@@ -2,11 +2,13 @@ package com.goshgarmirzayev.lastrebound.service.impl;
 
 import com.goshgarmirzayev.lastrebound.dao.LinkDaoInter;
 import com.goshgarmirzayev.lastrebound.entity.Link;
+import com.goshgarmirzayev.lastrebound.entity.Match;
 import com.goshgarmirzayev.lastrebound.service.inter.LinkServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class LinkServiceImpl implements LinkServiceInter {
     @Autowired
@@ -31,6 +33,11 @@ public class LinkServiceImpl implements LinkServiceInter {
     public int deleteById(Integer id) {
         linkDaoInter.deleteById(id);
         return 0;
+    }
+
+    @Override
+    public void deleteAllByMatchId(Match id) {
+        linkDaoInter.deleteAllByMatchId(id);
     }
 
 }
