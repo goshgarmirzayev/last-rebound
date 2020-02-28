@@ -17,6 +17,4 @@ public interface LeagueServiceInter {
     public int deleteAll();
 
     public League findByName(String name);
-
-
 }

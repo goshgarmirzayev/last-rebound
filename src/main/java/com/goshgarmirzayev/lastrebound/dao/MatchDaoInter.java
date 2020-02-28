@@ -14,5 +14,7 @@ public interface MatchDaoInter extends JpaRepository<Match, Integer> {
 
     List<Match> findAllByOrderByBeginDateDesc();
 
+    List<Match> findAllByLeagueId(League league);
+
     void deleteAllByLeagueId(League id);
 }

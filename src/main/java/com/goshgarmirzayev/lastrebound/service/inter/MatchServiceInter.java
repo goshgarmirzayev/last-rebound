@@ -23,5 +23,7 @@ public interface MatchServiceInter {
 
     List<Match> todayMatch(Date date);
 
+    public List<Match> filterByLeague(League league);
+
     void deleteAllByLeagueId(League league);
 }

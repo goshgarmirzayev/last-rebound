@@ -38,4 +38,9 @@ public class RestController {
         }
         return ResponseEntity.ok(leagueDTOS).getBody();
     }
+
+    public List<Match> filterByLeague() {
+
+        return null;
+    }
 }
