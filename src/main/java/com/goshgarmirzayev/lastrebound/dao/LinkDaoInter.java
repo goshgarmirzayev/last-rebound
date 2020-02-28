@@ -10,5 +10,7 @@ import java.util.Map;
 @Repository
 public interface LinkDaoInter extends JpaRepository<Link, Integer> {
     void deleteAllByMatchId(Match id);
+
+    Link findBySlug(String slug);
 }
 

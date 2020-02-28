@@ -74,14 +74,13 @@
             document.getElementById("mySidenav").style.width = "300px";
         }
 
-        /* Set the width of the side navigation to 0 */
+        /* Set  the width of the side navigation to 0 */
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
         }
     </script>
 </head>
 
-<body>
 <body bgcolor="#E6E6FA">
 <div id="mySidenav" class="mynav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -148,15 +147,15 @@
             $("#links-" + matchId).show();
             document.getElementById("links-" + matchId).innerHTML = ""
             $.ajax({
-                url: "/getMatchData/" + matchId,
+                url: "getMatchLinks/" + matchId,
                 method: "GET",
                 success: function (response) {
                     let linkJSON = JSON.parse(JSON.stringify(response))
                     var template = "<div class=\"media game-links\" id='links-addon'><div class=\"media-body\">"
                     $.each(linkJSON, function (index) {
-                        template += "<a class='btn btn-success mt-3 ml-3 mr-3' href=\"/watch/" + linkJSON[index].id + "\">" + linkJSON[index].header + "</a>"
+                        template += "<a class='btn btn-success mt-3 ml-3 mr-3' href=\"/watch/" + linkJSON[index].slug + "\">" + linkJSON[index].header + "</a>"
                     })
-                    template += "</div></div>";
+                    template += "</div></div> ";
                     linkBar.append(template)
                 }
             })

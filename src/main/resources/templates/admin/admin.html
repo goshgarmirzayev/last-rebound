@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <script type="text/javascript" th:src="@{js/jquery.js}"></script>
@@ -16,7 +17,7 @@
         $('.edit-league').on('click', function () {
             let leagueId = $(this).attr('data');
             $.ajax({
-                url: "/getLeagueData/" + leagueId,
+                url: "rest/getLeagueData/" + leagueId,
                 method: 'GET',
                 success: function (response) {
                     $('#updateLeaugueName').val(response.name)
@@ -91,7 +92,7 @@
 
 <body class="">
 
-<nav class="navbar navbar-dark bg-dark fixed-bottom">
+<nav class="navbar navbar-dark bg-dark fiex-top">
     <button class="navbar-toggler bg-light p-1" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -108,243 +109,240 @@
     </div>
 </nav>
 
-<div class=" col col-4 mx-auto">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLeague">
-        Add New Leauge
-    </button>
-</div>
-<div class="col col-12">
-    <p class="text"> Leauges:</p>
-    <table class="table">
-        <thead>
-        <th class="">#</th>
-        <th class="">Leauge name</th>
-        <th class="">Actions</th>
-        </thead>
-        <tbody>
-        <tr th:each="league:${leagueList}">
-            <td scope="col"></td>
-            <td scope="col" th:text="${league.name}"></td>
-            <td scope="col">
-                <button type="submit" class="btn btn-warning edit-league" data-toggle="modal" th:data="${league.id}"
-                        data-target="#updateLeauge">
-                    Edit
-                </button>
-
-                <input type="submit" class="btn btn-danger delete-league" data-toggle="modal" th:data="${league.id}"
-                       data-target="#deleteLeagueModal"
-                       value="Delete"/>
-            </td>
-        </tr>
-
-        </tbody>
-
-    </table>
-</div>
-<section id="videoFrame">
-    <!--    <form action="/adminPanel/search" class=" container">-->
-    <!--        <input type="text" name="query" role="searchbox" class="form-control" placeholder="f.e Real Madrid">-->
-    <!--        <input type="submit" class=" btn btn-primary" value="search">-->
-    <!--    </form>-->
-    <div class="container" th:each="match:${matchList}">
-        <div class="row">
-            <div class="col">
-                <li class="list-group-item mb-1 mt-1">
-                    <h3 th:text="${#dates.format(match.beginDate, 'HH:mm')+' | '+match.header}"></h3>
-                    <button th:onclick="|setIdForUpdate(${match.id})|" type="button"
-                            class="btn btn-warning" data-toggle="modal" data-target="#updateMatch" id="matchBtn">Update
-                    </button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
-                            th:onclick="|setIdForDelete(${match.id})|" id="matchBtn">Delete
-                    </button>
-                    <a class="btn btn-dark" th:href="${'/adminPanel/details/'+match.id}" id="matchBtn">Go to Details</a>
-                </li>
-
-            </div>
-        </div>
-    </div>
+<div class="row mx-auto">
     <div class=" col col-4 mx-auto">
-        <button type="button" class="btn btn-primary" id="btn-add-match" data-toggle="modal" data-target="#addMatch">
-            Add New Match
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLeague">
+            Add New Leauge
         </button>
     </div>
+    <div class="col col-12">
+        <p class="text"> Leauges:</p>
+        <table class="table">
+            <thead>
+            <th class="">#</th>
+            <th class="">Leauge name</th>
+            <th class="">Actions</th>
+            </thead>
+            <tbody>
+            <tr th:each="league:${leagueList}">
+                <td scope="col"></td>
+                <td scope="col" th:text="${league.name}"></td>
+                <td scope="col">
+                    <button type="submit" class="btn btn-warning edit-league" data-toggle="modal" th:data="${league.id}"
+                            data-target="#updateLeauge">
+                        Edit
+                    </button>
 
-</section>
+                    <input type="submit" class="btn btn-danger delete-league" data-toggle="modal" th:data="${league.id}"
+                           data-target="#deleteLeagueModal"
+                           value="Delete"/>
+                </td>
+            </tr>
 
-<!-- Modals -->
-<div class="modal fade" id="addMatch" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="GET" action="/adminPanel/addMatch" id="addMatchForm" class="" autocomplete="off">
-                <div class="modal-body">
+            </tbody>
 
-                    <input type="text" name="header" class="form-control mb-1"
-                           placeholder="Match Header">
-                    <input id="input" th:width="auto" name="beginDate">
-                    <script>
-                        $('#input').datetimepicker({
-                            uiLibrary: 'bootstrap4',
-                            modal: true,
-                            footer: true
-                        });
-                    </script>
-                    <select name="leagueId" id="leagues" class="custom-select mt-1" required>
+        </table>
+    </div>
 
-                    </select>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="save-match-btn">Save changes</button>
+        <div class="col col-md-8 col-lg-8 col-sm-8 m-auto" >
+
+                <div class="col" th:each="match:${matchList}">
+                    <li class="list-group-item mb-1 mt-1">
+                        <h3 th:text="${#dates.format(match.beginDate, 'HH:mm')+' | '+match.header}"></h3>
+                        <button th:onclick="|setIdForUpdate(${match.id})|" type="button"
+                                class="btn btn-warning" data-toggle="modal" data-target="#updateMatch" id="matchBtn">Update
+                        </button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                                th:onclick="|setIdForDelete(${match.id})|" id="matchBtn">Delete
+                        </button>
+                        <a class="btn btn-dark" th:href="${'/adminPanel/details/'+match.id}" id="matchBtn">Go to Details</a>
+                    </li>
+
+                </div>
+
+            <button type="button" class="btn btn-primary mx-auto" id="btn-add-match" data-toggle="modal" data-target="#addMatch">
+                Add New Match
+            </button>
+        </div>
+
+
+
+    <!-- Modals -->
+    <div class="modal fade" id="addMatch" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="GET" action="/adminPanel/addMatch" id="addMatchForm" class="" autocomplete="off">
+                    <div class="modal-body">
+
+                        <input type="text" name="header" class="form-control mb-1"
+                               placeholder="Match Header">
+                        <input id="input" th:width="auto" name="beginDate">
+                        <script>
+                            $('#input').datetimepicker({
+                                uiLibrary: 'bootstrap4',
+                                modal: true,
+                                footer: true
+                            });
+                        </script>
+                        <select name="leagueId" id="leagues" class="custom-select mt-1" required>
+
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="save-match-btn">Save changes</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="addLeague" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Leauge Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                </form>
             </div>
-            <form method="POST" action="/adminPanel/addLeague" class="" autocomplete="off">
-                <div class="modal-body">
 
-                    <input type="text" name="name" class="form-control mb-1"
-                           placeholder="Leauge name">
-                    <input type="url" name="logoUrl" class="form-control mb-1"
-                           placeholder="Logo url" required>
+        </div>
+    </div>
+    <div class="modal fade" id="addLeague" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Leauge Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="/adminPanel/addLeague" class="" autocomplete="off">
+                    <div class="modal-body">
+
+                        <input type="text" name="name" class="form-control mb-1"
+                               placeholder="Leauge name">
+                        <input type="url" name="logoUrl" class="form-control mb-1"
+                               placeholder="Logo url" required>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="updateMatch" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="GET" action="/adminPanel/updateMatch" class="">
+                    <div class="modal-body">
+
+                        <input type="text" name="header" class="form-control mb-1"
+                               placeholder="Match Header" id="updateHeader">
+                        <input id="inputUpdate" th:width="auto" name="beginDate">
+                        <script>
+                            $('#inputUpdate').datetimepicker({
+                                uiLibrary: 'bootstrap4',
+                                modal: true,
+                                footer: true
+                            });
+                        </script>
+                        <input type="hidden" name="matchId" id="matchIdForUpdate">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="updateLeauge" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="/adminPanel/updateLeague" class="">
+                    <div class="modal-body">
+
+                        <input type="text" name="name" class="form-control mb-1"
+                               placeholder="Match Header" id="updateLeaugueName">
+                        <input type="text" name="logoUrl" class="form-control mb-1"
+                               placeholder="Match Header" id="logoUrlForUpdate">
+                        <input type="hidden" name="leagueId" id="updateLeagueId">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Match Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure?</p>
+                </div>
+                <form action="/adminPanel/delete">
+                    <input type="hidden" name="matchId" id="matchId" value="0">
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="updateMatch" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                </form>
             </div>
-            <form method="GET" action="/adminPanel/updateMatch" class="">
+        </div>
+    </div>
+    <div class="modal fade" id="deleteLeagueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div class="modal-body">
+                    <p>Are you sure?</p>
+                </div>
+                <form action="/adminPanel/deleteLeague">
+                    <input type="hidden" name="leagueId" id="leagueIdForDelete" value="0">
 
-                    <input type="text" name="header" class="form-control mb-1"
-                           placeholder="Match Header" id="updateHeader">
-                    <input id="inputUpdate" th:width="auto" name="beginDate">
-                    <script>
-                        $('#inputUpdate').datetimepicker({
-                            uiLibrary: 'bootstrap4',
-                            modal: true,
-                            footer: true
-                        });
-                    </script>
-                    <input type="hidden" name="matchId" id="matchIdForUpdate">
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="updateLeauge" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Match Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                </form>
             </div>
-            <form method="POST" action="/adminPanel/updateLeague" class="">
-                <div class="modal-body">
-
-                    <input type="text" name="name" class="form-control mb-1"
-                           placeholder="Match Header" id="updateLeaugueName">
-                    <input type="text" name="logoUrl" class="form-control mb-1"
-                           placeholder="Match Header" id="logoUrlForUpdate">
-                    <input type="hidden" name="leagueId" id="updateLeagueId">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Match Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure?</p>
-            </div>
-            <form action="/adminPanel/delete">
-                <input type="hidden" name="matchId" id="matchId" value="0">
-
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Yes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
-<div class="modal fade" id="deleteLeagueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure?</p>
-            </div>
-            <form action="/adminPanel/deleteLeague">
-                <input type="hidden" name="leagueId" id="leagueIdForDelete" value="0">
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Yes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"

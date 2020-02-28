@@ -39,10 +39,8 @@ public class UpdateController {
         Match match = matchServiceInter.findById(id);
         List<LinkDTO> linkList = new ArrayList<>();
         System.out.println(match.getLinkList());
-
-
         for (Link link : match.getLinkList()) {
-            linkList.add(new LinkDTO(link.getId(),link.getHeader(), link.getUrl()));
+            linkList.add(new LinkDTO(link.getId(), link.getHeader(), link.getUrl(), link.getSlug()));
         }
         return ResponseEntity.ok(linkList).getBody();
     }

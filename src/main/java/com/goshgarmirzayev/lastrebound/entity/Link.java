@@ -5,6 +5,8 @@
  */
 package com.goshgarmirzayev.lastrebound.entity;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -52,6 +54,9 @@ public class Link implements Serializable {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "unique_slug", unique = true)
+    @Size(min = 0, max = 255)
+    private String slug;
     @Column(name = "width")
     private int iframeWidth;
     @Column(name = "height")
@@ -139,6 +144,14 @@ public class Link implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     @Override

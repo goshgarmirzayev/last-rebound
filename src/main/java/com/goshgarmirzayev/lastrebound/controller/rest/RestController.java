@@ -1,8 +1,12 @@
 package com.goshgarmirzayev.lastrebound.controller.rest;
 
 import com.goshgarmirzayev.lastrebound.dto.LeagueDTO;
+import com.goshgarmirzayev.lastrebound.dto.LinkDTO;
 import com.goshgarmirzayev.lastrebound.entity.League;
+import com.goshgarmirzayev.lastrebound.entity.Link;
+import com.goshgarmirzayev.lastrebound.entity.Match;
 import com.goshgarmirzayev.lastrebound.service.inter.LeagueServiceInter;
+import com.goshgarmirzayev.lastrebound.service.inter.MatchServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,9 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
+@RequestMapping(value = "/rest")
 public class RestController {
     @Autowired
     LeagueServiceInter leagueServiceInter;
+    @Autowired
+    MatchServiceInter matchServiceInter;
 
     @RequestMapping("/getLeagueData/{id}")
     public LeagueDTO getLeaugeDate(@PathVariable("id") Integer id) {

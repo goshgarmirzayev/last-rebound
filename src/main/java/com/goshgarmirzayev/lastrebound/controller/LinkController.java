@@ -42,9 +42,9 @@ public class LinkController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/watch/{linkId}")
-    public ModelAndView watch(ModelAndView modelAndView, @PathVariable("linkId") Integer linkId) {
-        modelAndView.addObject("link", linkServiceInter.findById(linkId));
+    @RequestMapping(value = "/watch/{slug}")
+    public ModelAndView watch(ModelAndView modelAndView, @PathVariable("slug") String slug) {
+        modelAndView.addObject("link", linkServiceInter.findBySlug(slug));
         modelAndView.setViewName("match/detail");
         return modelAndView;
     }

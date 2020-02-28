@@ -15,5 +15,8 @@ public interface LinkServiceInter {
     Link save(Link link);
 
     int deleteById(Integer id);
+
     void deleteAllByMatchId(Match match);
+
+    Link findBySlug(String slug);
 }
