@@ -59,8 +59,7 @@ public class MatchServiceImpl implements MatchServiceInter {
 
     @Override
     public List<Match> filterByLeague(League league) {
-        matchDaoInter.findAllByLeagueId(league);
-        return null;
+        return (List<Match>) matchDaoInter.findAllByLeagueId(league);
     }
 
     @Override

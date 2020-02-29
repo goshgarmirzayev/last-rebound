@@ -14,6 +14,30 @@
 </head>
 <script>
     $(document).ready(function () {
+        $("#leagueFilter").on('change', function () {
+            $("#matchList").empty();
+            var leagueId = $(this).find("option:selected").attr('data');
+            var template = ""
+            $.ajax({
+                url: "/rest/filterByLeague/" + leagueId,
+                success: function (response) {
+                    $.each(response, function (index, match) {
+                        template += "<tr><td></td><td scope='col'><span>" + match.begindate + " | " + match.name + "</span></td><td>" +
+                            "<button onclick=\"setIdForUpdate(" + match.id + ")\" type=\"button\"" +
+                            " class=\"btn btn-warning\" data-toggle=\"modal\" data-target=\"#updateMatch\" id=\"matchBtn\">\n" +
+                            "Update" + "</button>" +
+                            " <button type=\"button\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#deleteModal\"\n" +
+                            " onclick=\"setIdForDelete(" + match.id + ")\">Delete" +
+                            " </button>" +
+                            "<a class='btn btn-dark ml-2' href='/adminPanel/details/" + match.id + "'>Go to details</a>"
+                            + "</td></tr>"
+                    })
+                    console.log(template)
+                    $("#matchList").html(template)
+                }
+            })
+
+        })
         $('.edit-league').on('click', function () {
             let leagueId = $(this).attr('data');
             $.ajax({
@@ -148,7 +172,7 @@
         <div class="clearfix mt-5 mb-5"></div>
         <div class="col col-md-12 mt-5 mb-5">
             <select class="form-control col-xs-4 mb-1 mt-1" id="leagueFilter">
-                <option selected disabled>Filter by league</option>
+                <option selected th:data="${0}">Filter by league</option>
                 <th:block th:each="l:${leagueList}">
                     <option th:data="${l.id}" th:text="${l?.name}"></option>
                 </th:block>
@@ -160,7 +184,7 @@
                 <th class="">Game name & begin date</th>
                 <th class="">Actions</th>
                 </thead>
-                <tbody>
+                <tbody id="matchList">
                 <tr th:each="match:${matchList}">
                     <td scope="col"></td>
                     <td scope="col"><span
@@ -171,9 +195,9 @@
                             Update
                         </button>
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
-                                th:onclick="|setIdForDelete(${match.id})|" id="matchBtn">Delete
+                                th:onclick="|setIdForDelete(${match.id})|">Delete
                         </button>
-                        <a class="btn btn-dark" th:href="${'/adminPanel/details/'+match.id}" id="matchBtn">Go to
+                        <a class="btn btn-dark" th:href="${'/adminPanel/details/'+match.id}">Go to
                             Details</a>
                     </td>
                 </tr>

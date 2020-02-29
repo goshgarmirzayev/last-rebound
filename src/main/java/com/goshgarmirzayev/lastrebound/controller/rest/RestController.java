@@ -2,6 +2,7 @@ package com.goshgarmirzayev.lastrebound.controller.rest;
 
 import com.goshgarmirzayev.lastrebound.dto.LeagueDTO;
 import com.goshgarmirzayev.lastrebound.dto.LinkDTO;
+import com.goshgarmirzayev.lastrebound.dto.MatchDTO;
 import com.goshgarmirzayev.lastrebound.entity.League;
 import com.goshgarmirzayev.lastrebound.entity.Link;
 import com.goshgarmirzayev.lastrebound.entity.Match;
@@ -12,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +42,22 @@ public class RestController {
         return ResponseEntity.ok(leagueDTOS).getBody();
     }
 
-    public List<Match> filterByLeague() {
+    @RequestMapping(value = "/filterByLeague/{leagueId}")
+    public List<MatchDTO> filterByLeague(@PathVariable("leagueId") Integer leagueId) {
+        System.out.println("leagueID " + leagueId);
+        List<Match> matches = new ArrayList<>();
+        League league = null;
+        if (leagueId == 0) {
+            matches = matchServiceInter.findAll();
+        } else {
 
-        return null;
+            league = leagueServiceInter.findById(leagueId);
+            matches = matchServiceInter.filterByLeague(league);
+        }
+        List<MatchDTO> matchDTOS = new ArrayList<>();
+        for (Match match : matches) {
+            matchDTOS.add(new MatchDTO(match.getId(), match.getHeader(), match.getBeginDate()));
+        }
+        return ResponseEntity.ok(matchDTOS).getBody();
     }
 }
