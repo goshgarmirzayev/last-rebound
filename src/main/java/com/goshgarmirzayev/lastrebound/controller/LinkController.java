@@ -31,10 +31,8 @@ public class LinkController {
         modelAndView.addObject("leagues", leagueServiceInter.getAll());
         if (id != null) {
             League league = leagueServiceInter.findById(id);
+            modelAndView.addObject("leagueSelected", league);
             modelAndView.addObject("matchList", league.getMatchList());
-            Map<String, League> response = new HashMap<>();
-            response.put("league", league);
-
         } else {
             modelAndView.addObject("matchList", matchServiceInter.findAll());
         }
@@ -44,6 +42,7 @@ public class LinkController {
 
     @RequestMapping(value = "/watch/{slug}")
     public ModelAndView watch(ModelAndView modelAndView, @PathVariable("slug") String slug) {
+        modelAndView.addObject("leagues", leagueServiceInter.getAll());
         modelAndView.addObject("link", linkServiceInter.findBySlug(slug));
         modelAndView.setViewName("match/detail");
         return modelAndView;

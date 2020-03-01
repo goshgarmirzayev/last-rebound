@@ -61,6 +61,10 @@
                 font-size: 18px;
             }
         }
+
+        .logo {
+            max-width: 150px;
+        }
     </style>
     <script>
         /* Set the width of the side navigation to 250px */
@@ -80,17 +84,18 @@
 
 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 <div id="main">
-    <div class="container mx-auto">
+    <div class="mx-auto">
 
-        <div class="mx-auto games">
-            <div class="clearfix"><h1>NBA Live Streams and Schedule</h1>
+        <div class="mx-auto col col-md-6 col-lg-6 col-sm-12 games">
+            <div class=""><h1
+                    th:text="${leagueSelected?.name==null?'All famous leagues live streams and schedule':leagueSelected?.name+' live streams and schedule'}"></h1>
                 <hr>
             </div>
             <th:block th:each="game:${matchList}">
                 <a class="btn btn-default btn-lg btn-block game-bar">
                     <div class="media">
                         <div class="media-left">
-                            <img th:src="@{img/yourlogo.png}" class="media-object" th:width="150px">
+                            <img th:src="${game.leagueId.logoUrl}" class="media-object logo" th:width="auto">
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading" th:text="${game.header}"> LA Clippers vs Indiana Pacers</h4>

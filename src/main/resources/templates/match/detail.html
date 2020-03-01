@@ -4,14 +4,10 @@
       layout:decorate="~{base}">
 
 <head>
-    <title th:text="${'Watch'+link.matchId.header}"></title>
-    <script type="text/javascript" th:src="@{js/jquery.js}"></script>
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <title th:text="${'Watch | '+link.matchId.header}"></title>
 </head>
 <body bgcolor="#E6E6FA" layout:fragment="content">
-<div class="row">
+<div class="row mx-auto">
     <div class="col col-md-8 text-center offset-2 text-center">
 
         <h1 class="text-center" th:text="${link.matchId.header}"></h1>
