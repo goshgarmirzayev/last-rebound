@@ -1,16 +1,12 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with"
+      layout:decorate="~{/admin/adminBase}">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Panel</title>
+    <title>Admin sk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <script type="text/javascript" th:src="@{js/jquery.js}"></script>
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <script>
     $(document).ready(function () {
@@ -113,27 +109,10 @@
 
 
 </script>
+<body layout:fragment="adminContent">
 
-<body class="">
 
-<nav class="navbar navbar-dark bg-dark fiex-top">
-    <button class="navbar-toggler bg-light p-1" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav navbar-center">
-            <li class="nav-item">
-                <a class="nav-link" href="/" target="">Last rebound Admin Panel</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/adminPanel/addNewUser">Add new user</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class="container">
+<div class="container page-container">
     <div class="row mx-auto">
 
         <div class="col col-md-12 mt-5 mb-5">
