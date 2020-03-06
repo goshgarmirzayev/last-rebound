@@ -93,11 +93,11 @@
             </div>
             <th:block th:each="game:${matchList}">
                 <a class="btn btn-default btn-lg btn-block game-bar">
-                    <div class="media">
-                        <div class="media-left">
+                    <div class="d-flex justify-content-between">
+                        <div class="">
                             <img th:src="${game.leagueId.logoUrl}" class="media-object logo" th:width="auto">
                         </div>
-                        <div class="media-body">
+                        <div class="">
                             <h4 class="media-heading" th:text="${game.header}"> LA Clippers vs Indiana Pacers</h4>
                             <p th:text="${#dates.format(game.beginDate,'dd MMMM  yyyy hh:mm')}">December 9th, 2019 -
                                 7:00 PM
@@ -106,7 +106,7 @@
                                style="width: 50%">Show
                                 Links
                             </p>
-                            <div class="game-links" th:id="${'links-'+game.id}"></div>
+                            <div class="" th:id="${'links-'+game.id}"></div>
                             <input type="checkbox" style="display: none" checked="checked" class="link-checkbox"
                                    th:id="${'link-checkbox-'+game.id}">
                         </div>
@@ -137,7 +137,7 @@
                 method: "GET",
                 success: function (response) {
                     let linkJSON = JSON.parse(JSON.stringify(response))
-                    var template = "<div class=\"media game-links\" id='links-addon'><div class=\"media-body\">"
+                    var template = "<div class=\"\" id='links-addon'><div class=\"media-body\">"
                     $.each(linkJSON, function (index) {
                         template += "<a class='btn btn-success mt-3 ml-3 mr-3' href=\"/watch/" + linkJSON[index].slug + "\">" + linkJSON[index].header + "</a>"
                     })
