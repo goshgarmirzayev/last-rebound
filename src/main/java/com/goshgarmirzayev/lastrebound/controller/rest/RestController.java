@@ -1,8 +1,10 @@
 package com.goshgarmirzayev.lastrebound.controller.rest;
 
+import com.goshgarmirzayev.lastrebound.dao.UserDataInter;
 import com.goshgarmirzayev.lastrebound.dto.LeagueDTO;
 import com.goshgarmirzayev.lastrebound.dto.LinkDTO;
 import com.goshgarmirzayev.lastrebound.dto.MatchDTO;
+import com.goshgarmirzayev.lastrebound.dto.UserDTO;
 import com.goshgarmirzayev.lastrebound.entity.League;
 import com.goshgarmirzayev.lastrebound.entity.Link;
 import com.goshgarmirzayev.lastrebound.entity.Match;
@@ -26,7 +28,14 @@ public class RestController {
     LeagueServiceInter leagueServiceInter;
     @Autowired
     MatchServiceInter matchServiceInter;
+    @Autowired
+    UserDataInter userDataInter;
 
+    @RequestMapping(value = "/getUserData/{id}")
+    public UserDTO getUserData(@PathVariable("id") Integer id) {
+        UserDTO userDTO=new UserDTO(userDataInter.findById(id).get().getEmail(),userDataInter.findById(id).get().getPassword());
+        return ResponseEntity.ok(userDTO).getBody();
+    }
     @RequestMapping("/getLeagueData/{id}")
     public LeagueDTO getLeaugeDate(@PathVariable("id") Integer id) {
         League league = leagueServiceInter.findById(id);

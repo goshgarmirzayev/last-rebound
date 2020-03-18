@@ -1,14 +1,9 @@
 package com.goshgarmirzayev.lastrebound.controller;
 
+import com.goshgarmirzayev.lastrebound.dao.PostDataInter;
 import com.goshgarmirzayev.lastrebound.dao.UserDataInter;
-import com.goshgarmirzayev.lastrebound.entity.League;
-import com.goshgarmirzayev.lastrebound.entity.Link;
-import com.goshgarmirzayev.lastrebound.entity.Match;
-import com.goshgarmirzayev.lastrebound.entity.User;
-import com.goshgarmirzayev.lastrebound.service.inter.LeagueServiceInter;
-import com.goshgarmirzayev.lastrebound.service.inter.LinkServiceInter;
-import com.goshgarmirzayev.lastrebound.service.inter.MatchServiceInter;
-import com.goshgarmirzayev.lastrebound.service.inter.UserServiceInter;
+import com.goshgarmirzayev.lastrebound.entity.*;
+import com.goshgarmirzayev.lastrebound.service.inter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -32,6 +27,10 @@ public class AdminController {
     UserDataInter userDataInter;
     @Autowired
     LeagueServiceInter leagueServiceInter;
+    @Autowired
+    PostServiceInter postServiceInter;
+    @Autowired
+    PostDataInter postDataInter;
 
     @GetMapping
     public ModelAndView index(ModelAndView modelAndView) {
@@ -215,6 +214,7 @@ public class AdminController {
 
     @RequestMapping(value = "/addNewUser")
     public ModelAndView addSubUser(ModelAndView modelAndView) {
+        modelAndView.addObject("users", userServiceInter.findAll());
         modelAndView.setViewName("admin/addUser");
         return modelAndView;
     }
@@ -250,4 +250,32 @@ public class AdminController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/posts")
+    public ModelAndView posts(ModelAndView modelAndView) {
+        modelAndView.addObject("posts", postServiceInter.findAll());
+        modelAndView.setViewName("admin/post/index");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/addNewPost")
+    public ModelAndView addPost(@ModelAttribute("post") Post post) {
+        post.setApproved((short) 0);
+        post.setInsertDateTime(new Date());
+        postDataInter.save(post);
+        return new ModelAndView("redirect:/admin/blogs");
+    }
+
+    @RequestMapping(value = "/updateUser")
+    public ModelAndView updateUser(ModelAndView modelAndView, @RequestParam("id") Integer id, @RequestParam("email") String email, @RequestParam("password") String password) {
+        User newUser = userServiceInter.findById(id);
+        userServiceInter.save(newUser);
+        return new ModelAndView("redirect:/adminPanel/addNewUser");
+
+    }
+
+    @RequestMapping(value = "/deleteUser")
+    public ModelAndView deleteUser(@RequestParam("id") Integer id) {
+        userDataInter.deleteById(id);
+        return new ModelAndView("redirect:/adminPanel/addNewUser");
+    }
 }

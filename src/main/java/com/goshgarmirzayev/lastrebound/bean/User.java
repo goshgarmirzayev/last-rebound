@@ -12,19 +12,24 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email")
+//if the field contains email address consider using this annotation to enforce field validation
     private String email;
-    @Size(min = 3, max = 15, message ="use your real name")
+    @Size(min = 3, max = 15, message = "use your real name")
     private String name;
     @Size(min = 3, max = 30, message = "use your real surname")
     private String surname;
 
+    public User(Integer id, @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email") String email, @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}|$",
+            message = "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character") String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 
-
-    @Pattern(regexp="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}|$",
-            message="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character")
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}|$",
+            message = "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character")
     private String password;
-
 
 
     public Integer getId() {
@@ -67,7 +72,6 @@ public class User implements Serializable {
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
 
 
 }

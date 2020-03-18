@@ -67,7 +67,7 @@ and open the template in the editor.
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="/admin/blogs" method="POST">
+            <form action="/adminPanel/addNewPost" method="POST">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="title">Title</label>
@@ -79,12 +79,15 @@ and open the template in the editor.
                                required="required"/>
                     </div>
                     <div class="form-group">
-                        <label for="about">Content</label>
+                        <label for="editor">Content</label>
                         <textarea id="editor" name="content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule">Schedule time</label>
+                        <textarea id="schedule" name="content"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-
                     <input type="submit" class="btn btn-success" value="Add">
                     <input type="submit" class="btn btn-danger" data-dismiss="modal" value="Cancel">
                 </div>
@@ -150,7 +153,7 @@ and open the template in the editor.
         </div>
     </div>
 </div>
-<div class="table-bordered table-responsive" th:object="${blogs}">
+<div class="table-bordered table-responsive" th:object="${posts}">
     <table class="table">
         <thead>
         <tr>
@@ -165,21 +168,21 @@ and open the template in the editor.
         </thead>
         <tbody>
 
-        <tr th:each="blog : ${blogs}">
-            <td th:text="${blog.title}"></td>
-            <td th:text="${blog.thumbnailPath}"></td>
-            <td th:text="${blog.approved}"></td>
-            <td th:utext="${blog.content}"></td>
-            <td th:text="${blog.insertDateTime}"></td>
-            <td th:text="${blog.lastUpdateTime}"></td>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.title}"></td>
+            <td th:text="${post.thumbnailPath}"></td>
+            <td th:text="${post.approved}"></td>
+            <td th:utext="${post.content}"></td>
+            <td th:text="${post.insertDateTime}"></td>
+            <td th:text="${post.lastUpdateTime}"></td>
             <td>
                 <button class="btn btn-warning" data-toggle="modal" data-target="#updateModal"
-                        th:onclick="|setIdForUpdate('${blog.id}')|"
+                        th:onclick="|setIdForUpdate('${post.id}')|"
                 >
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>
                 <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
-                        th:onclick="|setIdForDelete('${blog.id}')|"
+                        th:onclick="|setIdForDelete('${post.id}')|"
                 >
                     <i class="fa fa-trash" aria-hidden="true"></i>
 
