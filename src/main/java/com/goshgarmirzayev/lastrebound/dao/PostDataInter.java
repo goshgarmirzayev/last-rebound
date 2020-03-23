@@ -1,8 +1,14 @@
 package com.goshgarmirzayev.lastrebound.dao;
 
 import com.goshgarmirzayev.lastrebound.entity.Post;
+import javafx.geometry.Pos;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PostDataInter extends CrudRepository<Post, Integer> {
+import java.util.Date;
+import java.util.List;
 
+public interface PostDataInter extends CrudRepository<Post, Integer> {
+    List<Post> findAllByScheduleTimeLessThan(Date date);
+
+    List<Post> findAllByApprovedOrderByInsertDateTime(Short aShort);
 }

@@ -8,5 +8,13 @@ import java.util.List;
 public interface PostServiceInter {
 
     List<Post> findAll();
+
+    List<Post> findApprovedPosts();
+
     Post findById(Integer id);
+
+    Post save(Post post);
+
+    int deleteById(Integer id);
+
 }

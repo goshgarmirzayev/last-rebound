@@ -5,6 +5,7 @@ import com.goshgarmirzayev.lastrebound.dao.LinkDaoInter;
 import com.goshgarmirzayev.lastrebound.entity.Link;
 import com.goshgarmirzayev.lastrebound.entity.Match;
 import com.goshgarmirzayev.lastrebound.service.inter.LinkServiceInter;
+import com.goshgarmirzayev.lastrebound.service.inter.SlugServiceInter;
 import net.bytebuddy.build.ToStringPlugin;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.regex.Pattern;
 public class LinkServiceImpl implements LinkServiceInter {
     @Autowired
     LinkDaoInter linkDaoInter;
+    @Autowired
+    SlugServiceInter slugServiceInter;
 
     @Override
     public List<Link> findAll() {
@@ -33,7 +36,7 @@ public class LinkServiceImpl implements LinkServiceInter {
 
     @Override
     public Link save(Link link) {
-        link.setSlug(uniqueSlug(link.getHeader()));
+        link.setSlug(slugServiceInter.generateSlug(link.getHeader()));
         return linkDaoInter.save(link);
     }
 
@@ -46,13 +49,6 @@ public class LinkServiceImpl implements LinkServiceInter {
     @Override
     public void deleteAllByMatchId(Match id) {
         linkDaoInter.deleteAllByMatchId(id);
-    }
-
-    private String uniqueSlug(String header) {
-        Slugify slugify = new Slugify();
-        String generated = slugify.slugify(header);
-        String randomUUID = UUID.randomUUID().toString().substring(0, 5);
-        return generated + "-" + randomUUID;
     }
 
     @Override

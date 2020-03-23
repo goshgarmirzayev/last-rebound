@@ -56,11 +56,16 @@ public class Post implements Serializable {
     @Column(name = "last_update_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateTime;
+    @Column(name = "schedule_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date scheduleTime;
     @Size(max = 255)
     @NotNull
     @Column(name = "thumbnail_path")
     private String thumbnailPath;
-
+    @Column(name = "unique_slug", unique = true)
+    @Size(min = 0, max = 255)
+    private String slug;
 
     public Post() {
     }
@@ -153,6 +158,14 @@ public class Post implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     @Override

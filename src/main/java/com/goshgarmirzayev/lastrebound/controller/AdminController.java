@@ -225,7 +225,7 @@ public class AdminController {
         if (r == -1) {
             result.rejectValue("email", "email", "exist");
         }
-        modelAndView.setViewName("redirect:/adminPanel");
+        modelAndView.setViewName("redirect:/adminPanel/addNewUser");
         return modelAndView;
     }
 
@@ -259,10 +259,8 @@ public class AdminController {
 
     @PostMapping(value = "/addNewPost")
     public ModelAndView addPost(@ModelAttribute("post") Post post) {
-        post.setApproved((short) 0);
-        post.setInsertDateTime(new Date());
-        postDataInter.save(post);
-        return new ModelAndView("redirect:/admin/blogs");
+        postServiceInter.save(post);
+        return new ModelAndView("redirect:/admin/posts");
     }
 
     @RequestMapping(value = "/updateUser")

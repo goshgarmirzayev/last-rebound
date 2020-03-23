@@ -14,7 +14,7 @@ public class SharedController {
 
     @RequestMapping("/post/index")
     public ModelAndView postIndex(ModelAndView modelAndView) {
-        modelAndView.addObject("posts", postServiceInter.findAll());
+        modelAndView.addObject("posts", postServiceInter.findApprovedPosts());
         modelAndView.setViewName("post/index");
         return modelAndView;
     }
