@@ -42,6 +42,7 @@ public class AdminController {
         return modelAndView;
     }
 
+    //Match started here
     @RequestMapping(value = "/delete")
     public ModelAndView delete(ModelAndView modelAndView, @RequestParam("matchId") Integer id) {
         for (Link l : matchServiceInter.findById(id).getLinkList()) {
@@ -90,6 +91,13 @@ public class AdminController {
         match.setLeagueId(leagueServiceInter.findById(leagueId));
         matchServiceInter.save(match);
         modelAndView.setViewName("redirect:/adminPanel");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/details/{matchId}")
+    public ModelAndView details(ModelAndView modelAndView, @PathVariable("matchId") Integer id) {
+        modelAndView.addObject("match", matchServiceInter.findById(id));
+        modelAndView.setViewName("admin/matchdetail");
         return modelAndView;
     }
 
@@ -160,6 +168,8 @@ public class AdminController {
         modelAndView.setViewName("redirect:/adminPanel/details/" + id);
         return modelAndView;
     }
+    //Match started here
+
 
     @RequestMapping(value = "/search")
     public ModelAndView search(ModelAndView modelAndView, @RequestParam("query") String query) {
@@ -174,13 +184,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/details/{matchId}")
-    public ModelAndView details(ModelAndView modelAndView, @PathVariable("matchId") Integer id) {
-        modelAndView.addObject("match", matchServiceInter.findById(id));
-        modelAndView.setViewName("admin/matchdetail");
-        return modelAndView;
-    }
-
+    //Links started here
     @RequestMapping(value = "/deleteLink")
     public ModelAndView deleteMatchLink(ModelAndView modelAndView, @RequestParam("linkId") Integer linkId) {
         System.out.println("linkId:" + linkId);
@@ -211,24 +215,10 @@ public class AdminController {
         linkServiceInter.save(link);
         return details(modelAndView, link.getMatchId().getId());
     }
+    //Links ended here
 
-    @RequestMapping(value = "/addNewUser")
-    public ModelAndView addSubUser(ModelAndView modelAndView) {
-        modelAndView.addObject("users", userServiceInter.findAll());
-        modelAndView.setViewName("admin/addUser");
-        return modelAndView;
-    }
 
-    @RequestMapping(value = "/addUser")
-    public ModelAndView addUser(ModelAndView modelAndView, @Valid User user, BindingResult result) {
-        int r = userServiceInter.save(user);
-        if (r == -1) {
-            result.rejectValue("email", "email", "exist");
-        }
-        modelAndView.setViewName("redirect:/adminPanel/addNewUser");
-        return modelAndView;
-    }
-
+    //League Started here
     @PostMapping(value = "/addLeague")
     public ModelAndView addLeague(ModelAndView modelAndView, @RequestParam("name") String name, @RequestParam("logoUrl") String logoUrl) {
         leagueServiceInter.save(new League(name, logoUrl));
@@ -250,17 +240,23 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/posts")
-    public ModelAndView posts(ModelAndView modelAndView) {
-        modelAndView.addObject("posts", postServiceInter.findAll());
-        modelAndView.setViewName("admin/post/index");
+    //League ended here
+    //Users started here
+    @RequestMapping(value = "/addNewUser")
+    public ModelAndView addSubUser(ModelAndView modelAndView) {
+        modelAndView.addObject("users", userServiceInter.findAll());
+        modelAndView.setViewName("admin/addUser");
         return modelAndView;
     }
 
-    @PostMapping(value = "/addNewPost")
-    public ModelAndView addPost(@ModelAttribute("post") Post post) {
-        postServiceInter.save(post);
-        return new ModelAndView("redirect:/admin/posts");
+    @RequestMapping(value = "/addUser")
+    public ModelAndView addUser(ModelAndView modelAndView, @Valid User user, BindingResult result) {
+        int r = userServiceInter.save(user);
+        if (r == -1) {
+            result.rejectValue("email", "email", "exist");
+        }
+        modelAndView.setViewName("redirect:/adminPanel/addNewUser");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/updateUser")
@@ -276,4 +272,20 @@ public class AdminController {
         userDataInter.deleteById(id);
         return new ModelAndView("redirect:/adminPanel/addNewUser");
     }
+    //Users ended here
+
+    //    Posts Started here
+    @GetMapping(value = "/posts")
+    public ModelAndView posts(ModelAndView modelAndView) {
+        modelAndView.addObject("posts", postServiceInter.findAll());
+        modelAndView.setViewName("admin/post/index");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/addNewPost")
+    public ModelAndView addPost(@ModelAttribute("post") Post post) {
+        postServiceInter.save(post);
+        return new ModelAndView("redirect:/admin/posts");
+    }
+    //Post ended here
 }
