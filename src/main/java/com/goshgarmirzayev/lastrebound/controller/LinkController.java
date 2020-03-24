@@ -25,7 +25,7 @@ public class LinkController {
     @Autowired
     LeagueServiceInter leagueServiceInter;
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/games")
     public ModelAndView index(ModelAndView modelAndView, @RequestParam(name = "id", required = false) Integer id) {
 
         modelAndView.addObject("leagues", leagueServiceInter.getAll());
