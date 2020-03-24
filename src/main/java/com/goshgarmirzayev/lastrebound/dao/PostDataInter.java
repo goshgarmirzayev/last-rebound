@@ -1,7 +1,6 @@
 package com.goshgarmirzayev.lastrebound.dao;
 
 import com.goshgarmirzayev.lastrebound.entity.Post;
-import javafx.geometry.Pos;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;
