@@ -11,7 +11,7 @@
 .mtj.tmp/
 /target
 /.idea
-#/static/img/
+/static/img/
 # Package Files #
 *.jar
 *.war
