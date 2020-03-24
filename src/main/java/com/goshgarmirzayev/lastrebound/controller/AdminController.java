@@ -291,7 +291,7 @@ public class AdminController {
     public ModelAndView addPost(@ModelAttribute("post") Post post, @RequestParam("image") MultipartFile[] img) {
         System.out.println(img);
 
-        post.setThumbnailPath("/static/img/post/" + imageService.createImage(img));
+        post.setThumbnailPath(imageService.createImage(img));
         postServiceInter.save(post);
         return new ModelAndView("redirect:/adminPanel/posts");
     }

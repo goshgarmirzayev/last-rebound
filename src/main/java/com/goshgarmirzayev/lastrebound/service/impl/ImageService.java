@@ -15,19 +15,19 @@ import java.util.UUID;
 public class ImageService {
     public String createImage(MultipartFile[] arr) {
         System.out.println(arr);
-        String path = null;
-        try {
-            path = "\\src\\main\\resources\\static\\img\\post\\" + UUID.randomUUID().toString() + ".jpg";
-            System.out.println(path);
 
-//            Path path1 = Paths.get(path).getFileSystem().getRootDirectories();
-//            byte[] strToBytes = arr[0].getBytes();
-//            Files.write(path1, strToBytes);
+        String path = null;
+        String randomName = "";
+        try {
+            randomName = UUID.randomUUID().toString() + ".jpg";
+            path = System.getProperty("user.dir") + "/src/main/resources/static/img/post/";
+            Path uploadedFile = Paths.get(path, randomName);
+            Files.write(uploadedFile, arr[0].getBytes());
 
         } catch (Exception e) {
             e.printStackTrace();
-            ;
+
         }
-        return path;
+        return "/img/post/" + randomName;
     }
 }
