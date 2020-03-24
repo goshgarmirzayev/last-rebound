@@ -131,46 +131,15 @@
             Latest News
         </h1>
         <div class="row">
-            <div class="col-4">
+            <div class="col-4" th:each="post:${posts}">
                 <div class="card shadow-lg">
                     <img class="card-img-top"
-                         src="https://news.bitcoin.com/wp-content/uploads/2020/03/shutterstock_718844119-760x512.png"
+                         th:src="${post?.thumbnailPath}"
                          alt="Card image cap">
                     <div class="card-body text-center">
-                        <h4 class="card-title">Card title</h4>
+                        <h4 class="card-title" th:text="${post?.title}">Card title</h4>
                         <p class="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card shadow-lg">
-                    <img class="card-img-top"
-                         src="https://news.bitcoin.com/wp-content/uploads/2020/03/shutterstock_718844119-760x512.png"
-                         alt="Card image cap">
-                    <div class="card-body text-center">
-                        <h4 class="card-title">Card title</h4>
-                        <p class="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card shadow-lg">
-                    <img class="card-img-top"
-                         src="https://news.bitcoin.com/wp-content/uploads/2020/03/shutterstock_718844119-760x512.png"
-                         alt="Card image cap">
-                    <div class="card-body text-center">
-                        <h4 class="card-title">Card title</h4>
-                        <p class="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
+                            <a class="btn btn-primary pull-right" th:href="${'/post/details/'+post?.id}">Read More</a>
                         </p>
 
                     </div>
@@ -246,8 +215,9 @@
         src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script>
-
     $(window).on("load", function () {
         $(".loader-wrapper").fadeOut("slow")
     });
