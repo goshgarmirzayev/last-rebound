@@ -3,14 +3,17 @@ package com.goshgarmirzayev.lastrebound.controller;
 import com.goshgarmirzayev.lastrebound.dao.PostDataInter;
 import com.goshgarmirzayev.lastrebound.dao.UserDataInter;
 import com.goshgarmirzayev.lastrebound.entity.*;
+import com.goshgarmirzayev.lastrebound.service.impl.ImageService;
 import com.goshgarmirzayev.lastrebound.service.inter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.util.*;
 
 @Controller
@@ -31,6 +34,8 @@ public class AdminController {
     PostServiceInter postServiceInter;
     @Autowired
     PostDataInter postDataInter;
+    @Autowired
+    ImageService imageService;
 
     @GetMapping
     public ModelAndView index(ModelAndView modelAndView) {
@@ -283,9 +288,12 @@ public class AdminController {
     }
 
     @PostMapping(value = "/addNewPost")
-    public ModelAndView addPost(@ModelAttribute("post") Post post) {
+    public ModelAndView addPost(@ModelAttribute("post") Post post, @RequestParam("image") MultipartFile[] img) {
+        System.out.println(img);
+
+        post.setThumbnailPath("/static/img/post/" + imageService.createImage(img));
         postServiceInter.save(post);
-        return new ModelAndView("redirect:/admin/posts");
+        return new ModelAndView("redirect:/adminPanel/posts");
     }
     //Post ended here
 }
