@@ -13,6 +13,8 @@ public interface PostServiceInter {
 
     Post findById(Integer id);
 
+    Post findBySlug(String slug);
+
     Post save(Post post);
 
     int deleteById(Integer id);

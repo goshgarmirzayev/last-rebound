@@ -24,11 +24,11 @@
                         <div class="row border-bottom border-muted pb-4">
                             <div class="col-md-4 text-center">
                                 <a href="#">
-                                    <img alt="" class="img-fluid" th:src="${post.thumbnailPath}">
+                                    <img alt="" class="img-fluid" th:src="${post?.thumbnailPath}">
                                 </a>
                             </div>
                             <div class="col-md-8">
-                                <p class="font-weight-light mb-3 h6 text-secondary" th:utext="${post.content}"></p>
+                                <p class="font-weight-light mb-3 h6 text-secondary" th:utext="${post?.content}"></p>
                                 <div class="d-flex justify-content-between">
                                 </div>
                             </div>

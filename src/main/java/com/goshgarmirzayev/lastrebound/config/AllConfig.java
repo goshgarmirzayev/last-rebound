@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -27,4 +29,5 @@ public class AllConfig {
     void started() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Baku"));
     }
+
 }

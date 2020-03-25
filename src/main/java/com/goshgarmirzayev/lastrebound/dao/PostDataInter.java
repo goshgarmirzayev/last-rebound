@@ -10,4 +10,5 @@ public interface PostDataInter extends CrudRepository<Post, Integer> {
     List<Post> findAllByScheduleTimeLessThan(Date date);
 
     List<Post> findAllByApprovedOrderByInsertDateTime(Short aShort);
+    Post findBySlug(String slug);
 }

@@ -139,7 +139,7 @@
                     <div class="card-body text-center">
                         <h4 class="card-title" th:text="${post?.title}">Card title</h4>
                         <p class="card-text">
-                            <a class="btn btn-primary pull-right" th:href="${'/post/details/'+post?.id}">Read More</a>
+                            <a class="btn btn-primary pull-right" th:href="${'/post/'+post?.slug}">Read More</a>
                         </p>
 
                     </div>

@@ -20,11 +20,9 @@
                      th:src="${post?.thumbnailPath}"
                      alt="Card image cap">
                 <div class="card-body text-center">
-                    <h4 class="card-title" th:text="${post?.title}">Card title</h4>s
-                    <p class="card-text"
-                       th:utext="${post?.content.length()>100 ? post?.content.substring(0,100)+'...':post?.content}">
-                        Some quick example text to build on the card title
-                        and make up the bulk of the card's content.
+                    <h4 class="card-title" th:text="${post?.title}">Card title</h4>
+                    <p class="card-text">
+                        <a class="btn btn-primary" th:href="${'/post/'+post.slug}">Read more...</a>
                     </p>
 
                 </div>
