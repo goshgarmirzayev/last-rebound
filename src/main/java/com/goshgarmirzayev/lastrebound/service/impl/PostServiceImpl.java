@@ -42,7 +42,6 @@ public class PostServiceImpl implements PostServiceInter {
 
     @Override
     public Post save(Post post) {
-        post.setApproved((short) 1);
         post.setInsertDateTime(new Date());
         post.setSlug(slugServiceInter.generateSlug(post.getTitle()));
         return postDataInter.save(post);

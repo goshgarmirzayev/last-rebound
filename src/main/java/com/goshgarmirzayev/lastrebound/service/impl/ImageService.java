@@ -21,8 +21,11 @@ public class ImageService {
         try {
             randomName = UUID.randomUUID().toString() + ".jpg";
             path = System.getProperty("user.dir") + "/src/main/resources/static/img/post/";
+            String upPath = System.getProperty("user.dir") + "\\target\\classes\\static\\img\\post";
+            Path mappedFile = Paths.get(upPath, randomName);
             Path uploadedFile = Paths.get(path, randomName);
             Files.write(uploadedFile, arr[0].getBytes());
+            Files.write(mappedFile, arr[0].getBytes());
 
         } catch (Exception e) {
             e.printStackTrace();

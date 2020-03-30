@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -287,13 +288,62 @@ public class AdminController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/addNewPost")
-    public ModelAndView addPost(@ModelAttribute("post") Post post, @RequestParam("image") MultipartFile[] img) {
-        System.out.println(img);
+    @GetMapping(value = "/posts/details")
+    public ModelAndView postDetails(ModelAndView modelAndView, @RequestParam("id") Integer id) {
+        if (id != 0)
+            modelAndView.addObject("post", postServiceInter.findById(id));
+        modelAndView.setViewName("admin/post/details");
+        return modelAndView;
+    }
 
-        post.setThumbnailPath(imageService.createImage(img));
-        postServiceInter.save(post);
+    //    @PostMapping(value = "/addNewPost")
+//    public ModelAndView addPost(@ModelAttribute("post") Post post, @RequestParam("image") MultipartFile[] img) {
+//        System.out.println(img);
+//        post.setThumbnailPath(imageService.createImage(img));
+//        post.setScheduleTime(new Date());
+//        postServiceInter.save(post);
+//        return new ModelAndView("redirect:/adminPanel/posts");
+//    }
+    @PostMapping(value = "/addNewPost")
+    public ModelAndView addPost(@RequestParam("image") MultipartFile[] img, @RequestParam("postId") Integer id,
+                                @RequestParam("title") String title,
+                                @RequestParam("content") String content,
+                                @RequestParam(value = "isScheduled", required = false) boolean isSch,
+                                @RequestParam(value = "isPublished", required = false) boolean isPub,
+                                @RequestParam(value = "isDrafted", required = false) boolean isDrafted,
+                                @RequestParam(value = "scheduledTime", required = false) Date schDate) {
+        Post post = null;
+        //Update Started
+        if (id != 0) {
+            post = postServiceInter.findById(id);
+            if (img != null) {
+                post.setThumbnailPath(imageService.createImage(img));
+            }
+            post.setApproved(isPub);
+            post.setDrafted(isDrafted);
+            post.setScheduled(isSch);
+            if (post.isScheduled()) {
+                post.setScheduleTime(schDate);
+            }
+            post.setTitle(title);
+            post.setContent(content);
+
+        } else {
+            post = new Post();
+            post.setContent(content);
+            post.setTitle(title);
+            post.setApproved(isPub);
+            post.setDrafted(isDrafted);
+            post.setScheduled(isSch);
+            if (isSch) {
+                //    03/31/2020 01:00
+                post.setScheduleTime(schDate);
+            }
+            post.setThumbnailPath(imageService.createImage(img));
+            postServiceInter.save(post);
+        }
+
         return new ModelAndView("redirect:/adminPanel/posts");
     }
-    //Post ended here
+//    //Post ended here
 }

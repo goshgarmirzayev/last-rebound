@@ -23,7 +23,7 @@ public class PostCheckerJob {
 
     public void checkScheduledPosts() {
         List<Post> posts = postDataInter.findAllByScheduleTimeLessThan(new Date());
-        posts.forEach(p -> p.setApproved((short) 1));
+        posts.forEach(p -> p.setApproved(true));
         posts.forEach((p -> postDataInter.save(p)));
     }
 }

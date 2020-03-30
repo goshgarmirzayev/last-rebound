@@ -47,7 +47,42 @@ public class Post implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "approved")
-    private short approved;
+    private boolean approved;
+    @NotNull
+    @Column(name = "drafted")
+    private boolean drafted;
+    @NotNull
+    @Column(name = "scheduled")
+    private boolean scheduled;
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public boolean isDrafted() {
+        return drafted;
+    }
+
+    public void setDrafted(boolean drafted) {
+        this.drafted = drafted;
+    }
+
+    public boolean isScheduled() {
+        return scheduled;
+    }
+
+    public void setScheduled(boolean scheduled) {
+        this.scheduled = scheduled;
+    }
+
+    public Date getScheduleTime() {
+        return scheduleTime;
+    }
+
+    public void setScheduleTime(Date scheduleTime) {
+        this.scheduleTime = scheduleTime;
+    }
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "insert_date_time")
@@ -74,7 +109,7 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public Post(String title, String content, short approved, Date insertDateTime, Date lastUpdateTime, String thumbnailPath) {
+    public Post(String title, String content, boolean approved, Date insertDateTime, Date lastUpdateTime, String thumbnailPath) {
         this.title = title;
         this.content = content;
         this.approved = approved;
@@ -107,11 +142,11 @@ public class Post implements Serializable {
         this.content = content;
     }
 
-    public short getApproved() {
+    public boolean getApproved() {
         return approved;
     }
 
-    public void setApproved(short approved) {
+    public void setApproved(boolean approved) {
         this.approved = approved;
     }
 
@@ -170,7 +205,7 @@ public class Post implements Serializable {
 
     @Override
     public String toString() {
-        return "com.bsptech.teachermanagement.entity.Post[ id=" + id + " ]";
+        return "id=" + id + "";
     }
 
 }
