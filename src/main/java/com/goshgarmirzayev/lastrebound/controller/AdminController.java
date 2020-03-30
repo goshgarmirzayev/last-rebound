@@ -322,12 +322,12 @@ public class AdminController {
             post.setApproved(isPub);
             post.setDrafted(isDrafted);
             post.setScheduled(isSch);
-            if (post.isScheduled()) {
+            if (isSch) {
                 post.setScheduleTime(schDate);
             }
             post.setTitle(title);
             post.setContent(content);
-
+            postServiceInter.save(post);
         } else {
             post = new Post();
             post.setContent(content);

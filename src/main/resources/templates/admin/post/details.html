@@ -26,6 +26,7 @@
             <label class="mt-5">Image*</label>
             <br>
             <input type="file" name="image" class="required" required>
+            <a th:href="${post?.thumbnailPath}">View image</a>
             <br>
             <label class="mt-5">Content*</label>
             <textarea name="content" id="editor"></textarea>
