@@ -50,7 +50,12 @@
         opacity: 0.6;
         background-color: rgb(35, 35, 35);
     }
-
+.center{
+    margin: 0!important;
+}
+.row{
+    margin: 0!important;
+}
     .loader-wrapper {
         width: 100%;
         height: 100%;
@@ -61,6 +66,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .slick-prev:before,
+    .slick-next:before {
+        display:none;
+    }
+    .slick-slide{
+        max-width: 640px!important;
+        padding-top: 50px;
+        padding-bottom: 50px;
     }
 </style>
 
@@ -126,12 +140,12 @@
     </div>
 </section>
 <div class="mt-5">
-    <div class="container">
         <h1 class="text-center mb-3">
             Latest News
         </h1>
-        <div class="row">
-            <div class="col-4" th:each="post:${posts}">
+
+        <div class="row center">
+            <div class="col-sm-12 col-md-6 col-lg-4" th:each="post:${posts}">
                 <div class="card shadow-lg">
                     <img class="card-img-top"
                          th:src="${post?.thumbnailPath}"
@@ -141,12 +155,12 @@
                         <p class="card-text">
                             <a class="btn btn-primary pull-right" th:href="${'/post/'+post?.slug}">Read More</a>
                         </p>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+
 </div>
 <div class="container">
     <!-- Footer -->
@@ -218,6 +232,34 @@
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script>
+    $('.center').slick({
+        centerMode: true,
+        slideToShow:2,
+        arrows:false,
+        infinite:true,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            }
+        ]
+    });
     $(window).on("load", function () {
         $(".loader-wrapper").fadeOut("slow")
     });
