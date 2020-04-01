@@ -15,8 +15,6 @@ and open the template in the editor.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script type="application/javascript" th:src="@{/js/jquery.cleditor.js}"></script>
-    <link rel="stylesheet" th:href="@{/js/jquery.cleditor.css}">
 </head>
 <body>
 <!--Setting Ids-->
@@ -24,7 +22,7 @@ and open the template in the editor.
 </script>
 <div>
     <a style="margin: 10px;" class="btn btn-success" id="addPost"
-           href="/adminPanel/posts/details/?id=0">
+       href="/adminPanel/posts/details/?id=0">
         Add Post
     </a>
 </div>
@@ -35,11 +33,10 @@ and open the template in the editor.
         <thead>
         <tr>
             <th>Title</th>
-            <th>Thumbnail Path</th>
-            <th>Approved</th>
+            <th>Image</th>
+            <th>Published</th>
             <th>Content</th>
-            <th>Insert Time</th>
-            <th>Last Update Time</th>
+            <th>Publish Date</th>
             <th>Options</th>
         </tr>
         </thead>
@@ -47,17 +44,14 @@ and open the template in the editor.
 
         <tr th:each="post : ${posts}">
             <td th:text="${post.title}"></td>
-            <td th:text="${post.thumbnailPath}"></td>
-            <td th:text="${post.approved}"></td>
+            <td><a th:href="${post?.thumbnailPath}" target="_blank">View image</a></td>
+            <td th:text="${post.approved?'Published':'Scheduled'}"></td>
             <td th:utext="${post.content}"></td>
             <td th:text="${post.insertDateTime}"></td>
-            <td th:text="${post.lastUpdateTime}"></td>
             <td>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#updateModal"
-                        th:onclick="|setIdForUpdate('${post.id}')|"
-                >
+                <a class="btn btn-warning" th:href="${'/adminPanel/posts/details/?id='+post?.id}">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>
+                </a>
                 <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
                         th:onclick="|setIdForDelete('${post.id}')|"
                 >

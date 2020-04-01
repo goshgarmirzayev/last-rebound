@@ -33,4 +33,9 @@ public class ImageService {
         }
         return "/img/post/" + randomName;
     }
+
+    public void delete(String path) throws IOException {
+        Path path1 = Paths.get(path);
+        Files.delete(path1);
+    }
 }

@@ -4,7 +4,6 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -12,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <title>Document</title>
     <script src="https://kit.fontawesome.com/771f910959.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="loading-bar.css"/>
 </head>
 <style>
     * {
@@ -21,7 +19,7 @@
 
     #first-section {
         position: relative;
-
+        /*height: 100vh;*/
         min-height: 550px;
         background-position: center;
         background-repeat: no-repeat;
@@ -50,12 +48,15 @@
         opacity: 0.6;
         background-color: rgb(35, 35, 35);
     }
-.center{
-    margin: 0!important;
-}
-.row{
-    margin: 0!important;
-}
+
+    .center {
+        margin: 0 !important;
+    }
+
+    .row {
+        margin: 0 !important;
+    }
+
     .loader-wrapper {
         width: 100%;
         height: 100%;
@@ -67,12 +68,14 @@
         justify-content: center;
         align-items: center;
     }
+
     .slick-prev:before,
     .slick-next:before {
-        display:none;
+        display: none;
     }
-    .slick-slide{
-        max-width: 640px!important;
+
+    .slick-slide {
+        max-width: 640px !important;
         padding-top: 50px;
         padding-bottom: 50px;
     }
@@ -121,12 +124,12 @@
 
         <div class="col-md-12">
 
-            <div class="text-white fs-60">LASTREBOUND</div>
-
+            <div class="text-white">
+                <h1>LASTREBOUND</h1></div>
             <div>
                 <button type="button"
                         class="btn bg-dark  rounded-pill font-weight-bold shadow text-white bg-header mt-5 "><a
-                        class="text-white m-3 fs-25 text-decoration-none" href="page.html"> OUR SERVICES</a>
+                        class="text-white m-3 fs-25 text-decoration-none" href="page.html">OUR SERVICES</a>
                 </button>
 
             </div>
@@ -140,25 +143,24 @@
     </div>
 </section>
 <div class="mt-5">
-        <h1 class="text-center mb-3">
-            Latest News
-        </h1>
-
-        <div class="row center">
-            <div class="col-sm-12 col-md-6 col-lg-4" th:each="post:${posts}">
-                <div class="card shadow-lg">
-                    <img class="card-img-top"
-                         th:src="${post?.thumbnailPath}"
-                         alt="Card image cap">
-                    <div class="card-body text-center">
-                        <h4 class="card-title" th:text="${post?.title}">Card title</h4>
-                        <p class="card-text">
-                            <a class="btn btn-primary pull-right" th:href="${'/post/'+post?.slug}">Read More</a>
-                        </p>
-                    </div>
+    <h1 class="text-center mb-3">
+        Latest News
+    </h1>
+    <div class="row center">
+        <div class="col-sm-12 col-md-6 col-lg-4" th:each="post:${posts}">
+            <div class="card shadow-lg">
+                <img class="card-img-top"
+                     th:src="${post?.thumbnailPath}"
+                     alt="Card image cap">
+                <div class="card-body text-center">
+                    <h4 class="card-title" th:text="${post?.title}">Card title</h4>
+                    <p class="card-text">
+                        <a class="btn btn-primary pull-right" th:href="${'/post/'+post?.slug}">Read More</a>
+                    </p>
                 </div>
             </div>
         </div>
+    </div>
 
 
 </div>
@@ -234,9 +236,9 @@
 <script>
     $('.center').slick({
         centerMode: true,
-        slideToShow:2,
-        arrows:false,
-        infinite:true,
+        slideToShow: 2,
+        arrows: false,
+        infinite: true,
         autoplay: true,
         autoplaySpeed: 5000,
         responsive: [

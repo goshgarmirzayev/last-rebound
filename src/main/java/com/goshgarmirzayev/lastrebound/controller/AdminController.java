@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -311,12 +312,14 @@ public class AdminController {
                                 @RequestParam(value = "isScheduled", required = false) boolean isSch,
                                 @RequestParam(value = "isPublished", required = false) boolean isPub,
                                 @RequestParam(value = "isDrafted", required = false) boolean isDrafted,
-                                @RequestParam(value = "scheduledTime", required = false) Date schDate) {
+                                @RequestParam(value = "scheduledTime", required = false) Date schDate,
+                                @RequestParam(value = "imgSelected", required = false) boolean imgSelected) {
         Post post = null;
         //Update Started
+        System.out.println(imgSelected);
         if (id != 0) {
             post = postServiceInter.findById(id);
-            if (img != null) {
+            if (!imgSelected) {
                 post.setThumbnailPath(imageService.createImage(img));
             }
             post.setApproved(isPub);
@@ -336,7 +339,6 @@ public class AdminController {
             post.setDrafted(isDrafted);
             post.setScheduled(isSch);
             if (isSch) {
-                //    03/31/2020 01:00
                 post.setScheduleTime(schDate);
             }
             post.setThumbnailPath(imageService.createImage(img));

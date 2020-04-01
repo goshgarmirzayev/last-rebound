@@ -23,31 +23,47 @@
               class="form-group col col-md-8 mx-auto">
             <label>Title*</label>
             <input type="text" name="title" class="form-control required" th:value="${post?.title}" required>
-            <label class="mt-5">Image*</label>
-            <br>
-            <input type="file" name="image" class="required" required>
-            <a th:href="${post?.thumbnailPath}">View image</a>
+
+
+            <th:block th:if="${post!=null}">
+
+                <label class="mt-5">Image</label>
+                <br>
+                <input type="file" name="image">
+                <a th:href="${post?.thumbnailPath}">View image</a>
+            </th:block>
+            <th:block th:if="${post==null}">
+                <label class="mt-5">Image*</label>
+                <br>
+                <input type="file" name="image" class="required" required>
+            </th:block>
             <br>
             <label class="mt-5">Content*</label>
-            <textarea name="content" id="editor"></textarea>
+            <textarea name="content" id="editor" th:text="${post?.content}"></textarea>
             <div>
                 <label>Publish now</label>
-                <input type="radio" id="publish" name="isPublished" class="btn btn-primary radio">
+                <input type="radio" id="publish" name="isPublished" th:checked="${post?.approved}"
+                       class="btn btn-primary radio">
                 <br>
                 <label>Schedule</label>
-                <input type="radio" id="schedule" name="isScheduled" class="btn btn-primary radio schedule">
+                <input type="radio" id="schedule" name="isScheduled" th:checked="${post?.scheduled}"
+                       class="btn btn-primary radio schedule">
                 <br>
                 <label>Save Draft</label>
-                <input type="radio" name="isDrafted" id="draft" class="btn btn-primary radio">
+                <input type="radio" name="isDrafted" th:checked="${post?.drafted}" id="draft"
+                       class="btn btn-primary radio">
             </div>
 
             <div id="scheduler-area" style="display: none">
                 <label>Schedule time</label>
-                <input type="text" name="scheduledTime" id="picker" class="form-control">
+                <input type="text" name="scheduledTime" id="picker" class="form-control"
+                       th:value="${post?.scheduleTime}">
             </div>
             <br>
             <br>
             <input type="hidden" id="postId" name="postId" th:value="${post!=null? post?.id: 0}">
+            <input type="checkbox" id="imgSelected" style="display: none" name="imgSelected"
+                   th:value="${post!=null? post?.id: 0}">
             <!--            <input type="hidden" id="isScheduled" value="0">-->
             <!--            <input type="hidden" id="isPublished" value="0">-->
             <!--            <input type="hidden" id="isDrafted" value="0">-->
@@ -82,14 +98,6 @@
         data["isDrafted"] = isDrafted;
         data["isPublished"] = isPublished;
         data["scheduleTime"] = scheduledTime
-        formData.append("title", title)
-        formData.append("image", image)
-        formData.append("content", content)
-        formData.append("postId", id)
-        formData.append("isScheduled", isScheduled)
-        formData.append("isPublished", isPublished)
-        formData.append("isDrafted", isDrafted)
-        formData.append("scheduleTime", scheduledTime)
         $(".required").each(function (index, element) {
             if (!$(element).val()) {
                 $(element).css("border", "1px solid red")
@@ -115,16 +123,18 @@
         } else {
         }
         if (image === null) {
-            $("input[type=file]").css("border", "1px solid red")
+            $("#imgSelected").prop("checked", true)
             post = false;
         } else {
-            $("input[type=file]").css("border", "none")
+            $("#imgSelected").prop("checked", false)
         }
         if ($("#schedule").is(":checked")) {
             if (scheduledTime == null) {
                 $("#picker").css("border", "1px solid red!important")
                 post = false;
             }
+        } else {
+            $("#picker").val("03/31/2020 01:00")
         }
         if (post) {
             $("#addForm").submit();
