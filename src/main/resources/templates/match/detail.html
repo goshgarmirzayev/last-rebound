@@ -2,22 +2,52 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:with="http://www.thymeleaf.org/extras/with"
       layout:decorate="~{base}">
-
 <head>
-    <title th:text="${'Watch | '+link.matchId.header}"></title>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
 </head>
-<body bgcolor="#E6E6FA" layout:fragment="content">
-<div class="row mx-auto">
-    <div class="col col-md-8 text-center offset-2 text-center">
 
-        <h1 class="text-center" th:text="${link.matchId.header}"></h1>
+<body layout:fragment="content">
 
-        <iframe scrolling="no" th:src="${link.url}" th:width="${link?.iframeWidth}" th:height="${link?.iframeHeight}">
 
-        </iframe>
-    </div>
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main">
+
 </div>
+
+</div>
+<script>
+    $(".show-links").on('click', function () {
+        var parent = $(this)
+        let matchId = parent.attr('data');
+        var showCheckBox = $('#link-checkbox-' + matchId)
+        let linkBar = $("#links-" + matchId);
+        if (showCheckBox.attr('checked')) {
+            showCheckBox.attr('checked', false)
+            parent[0].innerText = "Hide Links"
+            let matchId = parent.attr('data');
+            $("#links-" + matchId).show();
+            document.getElementById("links-" + matchId).innerHTML = ""
+            $.ajax({
+                url: "getMatchLinks/" + matchId,
+                method: "GET",
+                success: function (response) {
+                    let linkJSON = JSON.parse(JSON.stringify(response))
+                    var template = "<div class=\"\" id='links-addon'><div class=\"media-body\">"
+                    $.each(linkJSON, function (index) {
+                        template += "<a class='btn btn-success mt-3 ml-3 mr-3' href=\"/watch/" + linkJSON[index].slug + "\">" + linkJSON[index].header + "</a>"
+                    })
+                    template += "</div></div> ";
+                    linkBar.append(template)
+                }
+            })
+        } else {
+            showCheckBox.attr('checked', true)
+            $("#links-" + matchId).hide();
+            parent[0].innerText = "Show Links"
+        }
+
+    })
+</script>
 </body>
-
 </html>
-

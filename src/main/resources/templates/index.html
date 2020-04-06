@@ -1,268 +1,228 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with"
+      layout:decorate="~{base}"
+>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <title>Document</title>
-    <script src="https://kit.fontawesome.com/771f910959.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>LastRebound</title>
+	<link rel="icon" href="img/Fevicon.png" type="image/png">
+  <style>
+    .img-fluid-mine{
+      max-width: 50%!important;
+    }
+  </style>
 </head>
-<style>
-    * {
-        font-family: 'Rubik', sans-serif;
-    }
+<body layout:fragment="content" class="bg-shape">
 
-    #first-section {
-        position: relative;
-        /*height: 100vh;*/
-        min-height: 550px;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 100%;
-        background-attachment: fixed;
-        background-image: url("/img/clipart-basketball-sport-8.png");
-        text-align: center;
-        background-color: rgb(253, 207, 0);
-
-    }
-
-    .fs-60 {
-        font-size: 60px;
-    }
-
-    .fs-25 {
-        font-size: 25px;
-    }
-
-    .back-opacity {
-        width: 100%;
-        top: 0;
-        height: 100%;
-        position: absolute;
-        bottom: 0;
-        opacity: 0.6;
-        background-color: rgb(35, 35, 35);
-    }
-
-    .center {
-        margin: 0 !important;
-    }
-
-    .row {
-        margin: 0 !important;
-    }
-
-    .loader-wrapper {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgb(136, 111, 0);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .slick-prev:before,
-    .slick-next:before {
-        display: none;
-    }
-
-    .slick-slide {
-        max-width: 640px !important;
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-</style>
-
-<body>
-
-
-<div class=" bg-light">
+  <!--================Hero Banner Area Start =================-->
+  <section class="hero-banner magic-ball" id="about">
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-            <a class="navbar-brand" href="#"><img
-                    src="https://r.mobirisesite.com/55817/assets/images/mbr-122x118.png?v=1J9Yfu" alt="Mobirise"
-                    title="" style="height: 3.8rem;"><span class="ml-3">LastRebound</span></a>
-            <div class="navbar-toggler" data-toggle="collapse" data-target="#navbarTogglerDemo03"
-                 aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-                <img src="https://img.icons8.com/dotty/40/000000/basketball.png"/>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Live Streaming </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">News</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">About us</a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </nav>
-    </div>
-</div>
-<section id="first-section" class=" d-flex align-items-center">
-    <div class="back-opacity">
-    </div>
-    <div class="container pt-5 animated fadeInDown">
-
-        <div class="col-md-12">
-
-            <div class="text-white">
-                <h1>LASTREBOUND</h1></div>
-            <div>
-                <button type="button"
-                        class="btn bg-dark  rounded-pill font-weight-bold shadow text-white bg-header mt-5 "><a
-                        class="text-white m-3 fs-25 text-decoration-none" href="page.html">OUR SERVICES</a>
-                </button>
-
-            </div>
-
+      <div class="row align-items-center text-center text-md-left">
+        <div class="col-md-6 col-lg-5 mb-5 mb-md-0">
+          <h1>Travel More To Discover Yourself</h1>
+          <p>Air seed winged lights saw kind whales in sixth dont seas dron image so fish all tree meat dont there is seed winged lights saw kind whales in sixth dont seas dron image so fish all tree meat dont there </p>
+          <a class="button button-hero mt-4" href="#">Get Started</a>
         </div>
-
-
+        <div class="col-md-6 col-lg-7 col-xl-6 offset-xl-1">
+          <img class="img-fluid" src="/img/home/hero-img.svg" alt="">
+        </div>
+      </div>
     </div>
+  </section>
+  <!--================Hero Banner Area End =================-->
 
 
+  <!--================Service Area Start =================-->
+  <section class="section-margin generic-margin">
+    <div class="container">
+      <div class="section-intro text-center pb-90px">
+        <img class="section-intro-img" src="img/home/section-icon.png" alt="">
+        <h2>Our Services</h2>
+        <p>Fowl have fruit moveth male they are that place you will lesser</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="service-card text-center">
+            <div class="service-card-img">
+              <img class="img-fluid-mine" src="/img/home/service-1.svg" alt="">
+            </div>
+            <div class="service-card-body">
+              <h3>News</h3>
+              <p>Great so dominion two seed give dry rule be fowl him female you will gathered creeping and created air</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="service-card text-center">
+            <div class="service-card-img">
+              <img class="img-fluid-mine" src="/img/home/service-2.svg" alt="">
+            </div>
+            <div class="service-card-body">
+              <h3>Live streaming</h3>
+              <p>Great so dominion two seed give dry rule be fowl him female you will gathered creeping and created air</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="service-card text-center">
+            <div class="service-card-img">
+              <img class="img-fluid-mine" src="img/home/service-3.svg" alt="">
+            </div>
+            <div class="service-card-body">
+              <h3>Live Score</h3>
+              <p>Great so dominion two seed give dry rule be fowl him female you will gathered creeping and created air</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
-<div class="mt-5">
-    <h1 class="text-center mb-3">
-        Latest News
-    </h1>
-    <div class="row center">
-        <div class="col-sm-12 col-md-6 col-lg-4" th:each="post:${posts}">
-            <div class="card shadow-lg">
-                <img class="card-img-top"
-                     th:src="${post?.thumbnailPath}"
-                     alt="Card image cap">
-                <div class="card-body text-center">
-                    <h4 class="card-title" th:text="${post?.title}">Card title</h4>
-                    <p class="card-text">
-                        <a class="btn btn-primary pull-right" th:href="${'/post/'+post?.slug}">Read More</a>
-                    </p>
+  </section>
+  <!--================Service Area End =================-->
+
+  <!--================About Area Start =================-->
+  <section class="bg-gray section-padding magic-ball magic-ball-about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 mb-4 mb-md-0">
+          <div class="about-img">
+            <img class="img-fluid" src="img/home/about-img.png" alt="">
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-6 align-self-center about-content">
+          <h2>Exploration is <br class="d-none d-xl-block"> really the essence <br class="d-none d-xl-block"> of the human spirit</h2>
+          <p>Make she'd moved divided air. Whose tree that replenish tone hath own upon them it multiply was blessed is lights make gathering so day dominion so creeping air was made.</p>
+          <a class="button" href="#">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================About Area End =================-->
+
+  <!--================Tour section Start =================-->
+  <section class="section-margin pb-xl-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="tour-card">
+            <img class="card-img rounded-0" src="img/home/tour1.png" alt="">
+            <div class="tour-card-overlay">
+              <div class="media">
+                <div class="media-body">
+                  <h4>Paris tour offer</h4>
+                  <small>5 days offer</small>
+                  <p>We proper guided our tourist</p>
                 </div>
+                <div class="media-price">
+                  <h4 class="text-primary">$65/day</h4>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+              <div class="tour-content">
+                <h2>We offer worldwise tour plan recently</h2>
+                <p>Make she'd moved divided air. Whose tree that hath own upon them it multiply was blessed </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-card">
+            <img class="card-img rounded-0" src="img/home/tour2.png" alt="">
+            <div class="tour-card-overlay">
+              <div class="media">
+                <div class="media-body">
+                  <h4>Paris tour offer</h4>
+                  <small>5 days offer</small>
+                  <p>We proper guided our tourist</p>
+                </div>
+                <div class="media-price">
+                  <h4 class="text-primary">$65/day</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-lg-7">
+          <div class="tour-card">
+            <img class="card-img rounded-0" src="img/home/tour3.png" alt="">
+            <div class="tour-card-overlay">
+              <div class="media">
+                <div class="media-body">
+                  <h4>Paris tour offer</h4>
+                  <small>5 days offer</small>
+                  <p>We proper guided our tourist</p>
+                </div>
+                <div class="media-price">
+                  <h4 class="text-primary">$65/day</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-5">
+          <div class="tour-card">
+            <img class="card-img rounded-0" src="img/home/tour4.png" alt="">
+            <div class="tour-card-overlay">
+              <div class="media">
+                <div class="media-body">
+                  <h4>Paris tour offer</h4>
+                  <small>5 days offer</small>
+                  <p>We proper guided our tourist</p>
+                </div>
+                <div class="media-price">
+                  <h4 class="text-primary">$65/day</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+  <!--================Tour section End =================-->
 
+  <!--================Blog section Start =================-->
+  <section class="section-padding bg-gray">
+    <div class="container">
+      <div class="section-intro text-center pb-90px">
+        <img class="section-intro-img" src="img/home/section-icon.png" alt="">
+        <h2>Latest news</h2>
+        <p>Fowl have fruit moveth male they are that place you will lesser</p>
+      </div>
 
-</div>
-<div class="container">
-    <!-- Footer -->
-    <footer class="page-footer font-small special-color-dark pt-4">
-
-        <!-- Footer Elements -->
-        <div class="container">
-
-            <!-- Social buttons -->
-            <ul class="list-unstyled list-inline text-center">
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-fb mx-1">
-                        <i class="fab fa-facebook-f"> </i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-tw mx-1">
-                        <i class="fab fa-twitter"> </i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-gplus mx-1">
-                        <i class="fab fa-google-plus-g"> </i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-li mx-1">
-                        <i class="fab fa-linkedin-in"> </i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-dribbble mx-1">
-                        <i class="fab fa-dribbble"> </i>
-                    </a>
-                </li>
-            </ul>
-            <!-- Social buttons -->
-
+      <div class="row" >
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-0" th:each="post:${posts.subList(3,6)}">
+          <div class="card-blog">
+            <img class="card-img rounded-0" th:src="${post?.thumbnailPath}" src="img/blog/blog-1.png" alt="">
+            <div class="card-blog-body">
+              <a href="#">
+                <h4 th:text="${post?.title}">Forest responds to consultation smoking in al fresco.</h4>
+              </a>
+              <ul class="card-blog-info">
+                <li><a href="#" th:text="${#dates.format(post?.insertDateTime,'dd:MM:yyyy')}"><span class="align-middle"><i class="ti-notepad"></i></span>Jan 03, 2018</a></li>
+                <li><a href="#"><span class="align-middle"><i class="ti-comments-smiley"></i></span>03 Comments</a></li>
+              </ul>
+              <p>Varius metus morbi ferme libero vehic on porta malesuada ut interdu estmales torquent vehicula parturient </p>
+            </div>
+          </div>
         </div>
-        <!-- Footer Elements -->
+      </div>
+    </div>
+  </section>
+  <!--================Blog section End =================-->
 
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© Copyright 2020 LastRebound- All Rights Reserved</a>
-        </div>
-        <!-- Copyright -->
-
-    </footer>
-    <!-- Footer -->
-</div>
-<div class="loader-wrapper">
-    <img style="width: 150px;" th:src="@{/img/giphy.gif}" alt="">
-</div>
 </body>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-
 </html>
-<script
-        src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script>
-    $('.center').slick({
-        centerMode: true,
-        slideToShow: 2,
-        arrows: false,
-        infinite: true,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    arrows: false,
-                    centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 3
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    arrows: false,
-                    centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 1
-                }
-            }
-        ]
-    });
-    $(window).on("load", function () {
-        $(".loader-wrapper").fadeOut("slow")
-    });
-</script>
