@@ -7,7 +7,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
-
+/**
+ *
+ * @author Goshgar
+ *
+ */
 @Entity
 @Table(name = "league")
 public class League {

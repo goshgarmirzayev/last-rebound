@@ -204,7 +204,7 @@
       </div>
 
       <div class="row" >
-        <div class="col-md-6 col-lg-4 mb-4 mb-lg-0" th:each="post:${posts.subList(3,6)}">
+        <div class="col-md-6 col-lg-4 mb-4 mb-lg-0" th:each="post:${posts}">
           <div class="card-blog">
             <img class="card-img rounded-0" th:src="${post?.thumbnailPath}" src="img/blog/blog-1.png" alt="">
             <div class="card-blog-body">

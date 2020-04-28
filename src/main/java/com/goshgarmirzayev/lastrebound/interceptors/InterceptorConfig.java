@@ -15,5 +15,4 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors (InterceptorRegistry interceptorRegistry) {
         interceptorRegistry.addInterceptor(interceptor).addPathPatterns("/**");
     }
-
 }

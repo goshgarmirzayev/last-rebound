@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <title>News page</title>
+    <title>Latest news</title>
 
 </head>
 
@@ -94,41 +94,11 @@
 
                     <aside class="single_sidebar_widget post_category_widget">
                         <h4 class="widget_title">Category</h4>
-                        <ul class="list cat-list">
+                        <ul class="list cat-list" th:each="tag:${tags}">
                             <li>
                                 <a href="#" class="d-flex">
-                                    <p>Resaurant food</p>
-                                    <p>(37)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Travel news</p>
-                                    <p>(10)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Modern technology</p>
-                                    <p>(03)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Product</p>
-                                    <p>(11)</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Inspiration</p>
-                                    <p>21</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="d-flex">
-                                    <p>Health Care (21)</p>
-                                    <p>09</p>
+                                    <p th:text="${tag?.name}">Resaurant food</p>
+                                    <p th:text="${'('+tag?.postTagList?.size()+')'}">(37)</p>
                                 </a>
                             </li>
                         </ul>

@@ -347,5 +347,11 @@ public class AdminController {
 
         return new ModelAndView("redirect:/adminPanel/posts");
     }
+
+    @PostMapping(value = "/posts/delete")
+    public ModelAndView deletePost(@RequestParam("id") Integer id) {
+        postServiceInter.deleteById(id);
+        return new ModelAndView("redirect:/adminPanel/posts");
+    }
 //    //Post ended here
 }

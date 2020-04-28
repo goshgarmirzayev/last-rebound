@@ -7,24 +7,33 @@ package com.goshgarmirzayev.lastrebound.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * @author Goshgar
+ *
+ * @author Thinkpad
  */
 @Entity
 @Table(name = "post")
 @XmlRootElement
-@NamedQueries({
-        @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p")
-        , @NamedQuery(name = "Post.findById", query = "SELECT p FROM Post p WHERE p.id = :id")
-        , @NamedQuery(name = "Post.findByTitle", query = "SELECT p FROM Post p WHERE p.title = :title")
-        , @NamedQuery(name = "Post.findByApproved", query = "SELECT p FROM Post p WHERE p.approved = :approved")
-        , @NamedQuery(name = "Post.findByInsertDateTime", query = "SELECT p FROM Post p WHERE p.insertDateTime = :insertDateTime")
-        , @NamedQuery(name = "Post.findByLastUpdateTime", query = "SELECT p FROM Post p WHERE p.lastUpdateTime = :lastUpdateTime")})
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,9 +44,8 @@ public class Post implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "title")
-    private String title;
+    @Column(name = "approved")
+    private boolean approved;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -46,61 +54,38 @@ public class Post implements Serializable {
     private String content;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "approved")
-    private boolean approved;
-    @NotNull
-    @Column(name = "drafted")
-    private boolean drafted;
-    @NotNull
-    @Column(name = "scheduled")
-    private boolean scheduled;
-
-    public boolean isApproved() {
-        return approved;
-    }
-
-    public boolean isDrafted() {
-        return drafted;
-    }
-
-    public void setDrafted(boolean drafted) {
-        this.drafted = drafted;
-    }
-
-    public boolean isScheduled() {
-        return scheduled;
-    }
-
-    public void setScheduled(boolean scheduled) {
-        this.scheduled = scheduled;
-    }
-
-    public Date getScheduleTime() {
-        return scheduleTime;
-    }
-
-    public void setScheduleTime(Date scheduleTime) {
-        this.scheduleTime = scheduleTime;
-    }
-
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "insert_date_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date insertDateTime;
     @Column(name = "last_update_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateTime;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "thumbnail_path")
+    private String thumbnailPath;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "title")
+    private String title;
     @Column(name = "schedule_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date scheduleTime;
     @Size(max = 255)
-    @NotNull
-    @Column(name = "thumbnail_path")
-    private String thumbnailPath;
-    @Column(name = "unique_slug", unique = true)
-    @Size(min = 0, max = 255)
+    @Column(name = "unique_slug")
     private String slug;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "drafted")
+    private boolean drafted;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "scheduled")
+    private boolean scheduled;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    private List<PostTag> postTagList;
 
     public Post() {
     }
@@ -109,13 +94,15 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public Post(String title, String content, boolean approved, Date insertDateTime, Date lastUpdateTime, String thumbnailPath) {
-        this.title = title;
-        this.content = content;
+    public Post(Integer id, boolean approved, String content, Date insertDateTime, String thumbnailPath, String title, boolean drafted, boolean scheduled) {
+        this.id = id;
         this.approved = approved;
+        this.content = content;
         this.insertDateTime = insertDateTime;
-        this.lastUpdateTime = lastUpdateTime;
         this.thumbnailPath = thumbnailPath;
+        this.title = title;
+        this.drafted = drafted;
+        this.scheduled = scheduled;
     }
 
     public Integer getId() {
@@ -126,12 +113,12 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public boolean getApproved() {
+        return approved;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 
     public String getContent() {
@@ -140,14 +127,6 @@ public class Post implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public boolean getApproved() {
-        return approved;
-    }
-
-    public void setApproved(boolean approved) {
-        this.approved = approved;
     }
 
     public Date getInsertDateTime() {
@@ -166,13 +145,61 @@ public class Post implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-
     public String getThumbnailPath() {
         return thumbnailPath;
     }
 
     public void setThumbnailPath(String thumbnailPath) {
         this.thumbnailPath = thumbnailPath;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getScheduleTime() {
+        return scheduleTime;
+    }
+
+    public void setScheduleTime(Date scheduleTime) {
+        this.scheduleTime = scheduleTime;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String uniqueSlug) {
+        this.slug = uniqueSlug;
+    }
+
+    public boolean getDrafted() {
+        return drafted;
+    }
+
+    public void setDrafted(boolean drafted) {
+        this.drafted = drafted;
+    }
+
+    public boolean getScheduled() {
+        return scheduled;
+    }
+
+    public void setScheduled(boolean scheduled) {
+        this.scheduled = scheduled;
+    }
+
+    @XmlTransient
+    public List<PostTag> getPostTagList() {
+        return postTagList;
+    }
+
+    public void setPostTagList(List<PostTag> postTagList) {
+        this.postTagList = postTagList;
     }
 
     @Override
@@ -195,17 +222,9 @@ public class Post implements Serializable {
         return true;
     }
 
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
     @Override
     public String toString() {
-        return "id=" + id + "";
+        return "com.goshgarmirzayev.lastrebound.entity.Post[ id=" + id + " ]";
     }
-
+    
 }
