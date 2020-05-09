@@ -27,7 +27,7 @@ public class SharedController {
     @RequestMapping("/posts/{slug}")
     public ModelAndView postDetails(@PathVariable("slug") String slug, ModelAndView modelAndView) throws Exception {
         modelAndView.addObject("tags", tagServiceInter.findAll());
-
+        modelAndView.addObject("posts",postServiceInter.findAll().subList(0,postServiceInter.findAll().size()/2));
         modelAndView.addObject("post", postServiceInter.findBySlug(slug));
         modelAndView.setViewName("post/details");
         return modelAndView;
