@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/**").addResourceLocations("file:images/");
+        registry.addResourceHandler("/projects/lastrebound/images/**").addResourceLocations("file:/projects/lastrebound/images/");
     }
 
 

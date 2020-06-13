@@ -20,9 +20,10 @@ public class ImageDisplayerController {
     {
           // get the right annonce from
         //database
-        File imageFile = new File("images/"+path);
+        File imageFile = new File("/projects/lastrebound/images/"+path);
         response.setContentType("image/jpeg");
         InputStream in=new FileInputStream(imageFile);
         IOUtils.copy(in, response.getOutputStream());
+
     }
 }

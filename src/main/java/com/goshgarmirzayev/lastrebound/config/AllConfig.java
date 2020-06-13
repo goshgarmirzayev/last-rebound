@@ -12,6 +12,7 @@ import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -28,6 +29,11 @@ public class AllConfig {
     @PostConstruct
     void started() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Baku"));
+        //Create upload directory
+        File file=new File("/projects/lastrebound/images");
+        if(!file.exists()){
+            file.mkdirs();
+        }
     }
 
 }

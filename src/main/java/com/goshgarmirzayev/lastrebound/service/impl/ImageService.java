@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.UUID;
 
 @Service
@@ -22,7 +20,7 @@ public class ImageService {
             randomName = UUID.randomUUID().toString() + ".jpg";
 
 //            Path mappedFile = Paths.get("images/", randomName);
-            Path uploadedFile = Paths.get("images/", randomName);
+            Path uploadedFile = Paths.get("/projects/lastrebound/images/", randomName);
             Files.write(uploadedFile, arr[0].getBytes());
 //            Files.write(mappedFile, arr[0].getBytes());
 
