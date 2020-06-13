@@ -67,7 +67,7 @@ and open the template in the editor.
             <td th:text="${post.title}"></td>
             <td><a th:href="${post?.thumbnailPath}" target="_blank">View image</a></td>
             <td th:text="${post.approved?'Published':'Scheduled'}"></td>
-            <td th:utext="${post.content}"></td>
+            <td th:utext="${post?.cleanContent}"></td>
             <td th:text="${post.insertDateTime}"></td>
             <td>
                 <a class="btn btn-warning" th:href="${'/adminPanel/posts/details/?id='+post?.id}">

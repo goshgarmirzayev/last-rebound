@@ -86,7 +86,12 @@ public class Post implements Serializable {
     private boolean scheduled;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
     private List<PostTag> postTagList;
-
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "cleanContent")
+    private String cleanContent;
     public Post() {
     }
 
@@ -220,6 +225,26 @@ public class Post implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public boolean isDrafted() {
+        return drafted;
+    }
+
+    public boolean isScheduled() {
+        return scheduled;
+    }
+
+    public String getCleanContent() {
+        return cleanContent;
+    }
+
+    public void setCleanContent(String cleanContent) {
+        this.cleanContent = cleanContent;
     }
 
     @Override

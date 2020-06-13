@@ -46,6 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().formLogin().loginPage("/user/login").loginProcessingUrl("/login").defaultSuccessUrl("/")
                 .and().logout().logoutSuccessUrl("/")
                 .and().csrf().disable();
+        http
+                .rememberMe()
+                .key("myUniqueKey")
+                .rememberMeCookieName("lastrebound-login-remember-me")
+                .tokenValiditySeconds(10000000);
     }
 
     @Bean

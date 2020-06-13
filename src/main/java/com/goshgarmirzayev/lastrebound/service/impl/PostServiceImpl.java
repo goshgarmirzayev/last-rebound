@@ -5,6 +5,7 @@ import com.goshgarmirzayev.lastrebound.dao.PostDataInter;
 import com.goshgarmirzayev.lastrebound.entity.Post;
 import com.goshgarmirzayev.lastrebound.service.inter.PostServiceInter;
 import com.goshgarmirzayev.lastrebound.service.inter.SlugServiceInter;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,8 @@ public class PostServiceImpl implements PostServiceInter {
         } else {
             post.setInsertDateTime(new Date());
         }
-
+        //Get post content without html :)
+        post.setCleanContent(Jsoup.parse(post.getContent()).text());
         post.setSlug(slugServiceInter.generateSlug(post.getTitle()));
         return postDataInter.save(post);
     }
